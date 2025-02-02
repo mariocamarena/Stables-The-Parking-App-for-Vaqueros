@@ -18,7 +18,7 @@
 **Team Members:**
 - [@mariocamarena ](https://github.com/mariocamarena)
 - [@OzielSauceda ](https://github.com/OzielSauceda)
-- [@mariocamarena ](https://github.com/mariocamarena)
+- [@EkuaSW ](https://github.com/EkuaSW)
 - [@Victorsilva2 ](https://github.com/Victorsilva2)
 
 **Advisor**:
