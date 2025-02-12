@@ -1,4 +1,4 @@
 node_modules/
 .env
 *.log
-backend_stabclsles/data/simulated_data.json
+data/
