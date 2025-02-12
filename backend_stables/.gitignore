@@ -1,3 +1,4 @@
 node_modules/
 .env
 *.log
+backend_stables\data\simulated_data.json
