@@ -16,13 +16,16 @@ app.get('/', (req, res) => {
 
 const dataPath = path.join(__dirname, 'data/simulated_data.json');
 
-const pythonProcess = spawn('python', ['scripts/sensor_data.py']);
+function updateData(){
+  const pythonProcess = spawn('python', ['scripts/sensor_data.py']);
+  
+  pythonProcess.on('close', (code) => {
+    console.log("=== Generated Data ===");
+  });
+}
 
-
-
-pythonProcess.on('close', (code) => {
-  console.log("=== Generated Data ===");
-});
+updateSimulatedData();
+setInterval(updateSimulatedData, 10000);
 
 
 app.get('/parking',(req,res) => {
