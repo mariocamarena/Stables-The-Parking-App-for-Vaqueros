@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 const dataPath = path.join(__dirname, 'data/simulated_data.json');
 
-function updateData(){
+function updateSimulatedData(){
   const pythonProcess = spawn('python', ['scripts/sensor_data.py']);
   
   pythonProcess.on('close', (code) => {
@@ -40,7 +40,10 @@ app.get('/parking',(req,res) => {
   const data = fs.readFileSync(dataPath, 'utf8');
   const parsedData = JSON.parse(data);
   res.json(parsedData);
+});
 
+app.get('/dashboard', (req,res) => {
+  res.sendFile(path.join(__dirname, 'scripts', 'dashboard.html'));
 });
 
 const PORT = process.env.PORT || 3000;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stables Parking Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .lot {
+      margin-bottom: 40px;
+    }
+    .lot-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .parking-table {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    .parking-table td {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid #ccc;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    .available {
+      background-color: green; 
+    }
+    .occupied {
+      background-color:red; 
+    }
+  </style>
+</head>
+<body>
+  <h1>Stables Parking Dashboard</h1>
+  <div id="dashboard">Loading parking data...</div>
+
+  <script>
+    async function fetchParkingData() {
+      try {
+        const response = await fetch('/parking');
+        const data = await response.json();
+        updateDashboard(data);
+      } catch (error) {
+        console.error("Error fetching parking data:", error);
+      }
+    }
+
+    function updateDashboard(data) {
+      const dashboard = document.getElementById("dashboard");
+      dashboard.innerHTML = ""; // clear
+
+      data.forEach(lot => {
+        const lotDiv = document.createElement("div");
+        lotDiv.className = "lot";
+
+        // title
+        const title = document.createElement("div");
+        title.className = "lot-title";
+        title.textContent = `${lot.lot_id} (${lot.zone_type}) - Available: ${lot.available_spots} / ${lot.total_spots}`;
+        lotDiv.appendChild(title);
+
+        // table
+        const table = document.createElement("table");
+        table.className = "parking-table";
+        const spotsPerRow = 10; 
+        let row;
+        lot.parking_status.forEach((spot, index) => {
+          if (index % spotsPerRow === 0) {
+            row = document.createElement("tr");
+            table.appendChild(row);
+          }
+          const cell = document.createElement("td");
+          
+          cell.textContent = spot.spot_id.split('_').pop();
+          cell.className = (spot.status === "available") ? "available" : "occupied";
+          row.appendChild(cell);
+        });
+        lotDiv.appendChild(table);
+        dashboard.appendChild(lotDiv);
+      });
+    }
+
+    // update every
+    fetchParkingData();
+    setInterval(fetchParkingData, 1000);
+  </script>
+</body>
+</html>
