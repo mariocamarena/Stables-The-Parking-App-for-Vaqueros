@@ -43,11 +43,29 @@
   <h1>Stables Parking Dashboard</h1>
   <div id="dashboard">Loading parking data...</div>
 
+  <div id="currentTime" style="text-align: center; font-size: 1.2em; margin-bottom: 20px;">
+    Loading current time...
+  </div>
+  <div id="debugInfo" style="display: none; text-align: center; font-size: 1em; margin-bottom: 20px; color: red;">
+  </div>
+
   <script>
+    let latestData = [];
+
     async function fetchParkingData() {
       try {
         const response = await fetch('/parking');
         const data = await response.json();
+
+        if (data.current_time && data.lots){
+          document.getElementById("currentTime").textContent = "Current Time: " + data.current_time;
+          pdateDashboard(data.lots);
+          latestData = data.lots; 
+        } else {
+          
+        }
+
+
         updateDashboard(data);
       } catch (error) {
         console.error("Error fetching parking data:", error);

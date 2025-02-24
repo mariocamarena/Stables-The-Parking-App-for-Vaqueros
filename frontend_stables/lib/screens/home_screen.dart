@@ -1,16 +1,91 @@
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
+import '../services/api_connection.dart';
 
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class SensorInfoScreen extends StatelessWidget {
+  const SensorInfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Welcome to Home!",
-        style: TextStyle(fontSize: 20, color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Sensor Info',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: FutureBuilder<List<dynamic>>(
+        future: SensorService.fetchSensorData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final sensorData = snapshot.data!;
+            return ListView.builder(
+              itemCount: sensorData.length,
+              itemBuilder: (context, index) {
+                final lot = sensorData[index];
+                final int totalSpots = lot['total_spots'];
+                final int availableSpots = lot['available_spots'];
+                final double filledPercentage =(totalSpots - availableSpots) / totalSpots;
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white, 
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Lot: ${lot['lot_id']}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Zone: ${lot['zone_type']}',
+                        style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'Total Spots: $totalSpots\nAvailable Spots: $availableSpots',
+                        style: const TextStyle(color: Colors.black87),
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0), 
+                        child: LinearProgressIndicator(
+                          value: (lot['total_spots'] - lot['available_spots']) / lot['total_spots'],
+                          minHeight: 12, 
+                          backgroundColor: Colors.grey[300],
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.green), 
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${(filledPercentage * 100).toStringAsFixed(1)}% Full',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(child: Text('No data available'));
+          }
+        },
       ),
     );
   }
