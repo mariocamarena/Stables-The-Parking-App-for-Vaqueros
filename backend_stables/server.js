@@ -25,7 +25,7 @@ function updateSimulatedData(){
 }
 
 updateSimulatedData();
-setInterval(updateSimulatedData, 10000);
+setInterval(updateSimulatedData, 1000);
 
 
 app.get('/parking',(req,res) => {

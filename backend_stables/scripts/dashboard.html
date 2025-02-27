@@ -59,10 +59,8 @@
 
         if (data.current_time && data.lots){
           document.getElementById("currentTime").textContent = "Current Time: " + data.current_time;
-          pdateDashboard(data.lots);
+          updateDashboard(data.lots);
           latestData = data.lots; 
-        } else {
-          
         }
 
 
@@ -107,7 +105,7 @@
       });
     }
 
-    // update every
+    // update every sec | 1000 = 1 sec
     fetchParkingData();
     setInterval(fetchParkingData, 1000);
   </script>
