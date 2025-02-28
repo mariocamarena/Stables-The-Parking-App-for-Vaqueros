@@ -1,8 +1,42 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../services/api_connection.dart';
 
-class SensorInfoScreen extends StatelessWidget {
+class SensorInfoScreen extends StatefulWidget {
   const SensorInfoScreen({Key? key}) : super(key: key);
+
+  @override
+  _SensorInfoScreenState createState() => _SensorInfoScreenState();
+}
+
+class _SensorInfoScreenState extends State<SensorInfoScreen> {
+  Timer? _timer;
+  final StreamController<List<dynamic>> _sensorDataController = StreamController<List<dynamic>>();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSensorData();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _fetchSensorData();
+    });
+  }
+
+  void _fetchSensorData() async {
+    try {
+      final sensorData = await SensorService.fetchSensorData();
+      _sensorDataController.add(sensorData);
+    } catch (error) {
+      _sensorDataController.addError(error);
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _sensorDataController.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +47,8 @@ class SensorInfoScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: SensorService.fetchSensorData(),
+      body: StreamBuilder<List<dynamic>>(
+        stream: _sensorDataController.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -28,12 +62,12 @@ class SensorInfoScreen extends StatelessWidget {
                 final lot = sensorData[index];
                 final int totalSpots = lot['total_spots'];
                 final int availableSpots = lot['available_spots'];
-                final double filledPercentage =(totalSpots - availableSpots) / totalSpots;
+                final double filledPercentage = (totalSpots - availableSpots) / totalSpots;
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white, 
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Column(
@@ -50,8 +84,8 @@ class SensorInfoScreen extends StatelessWidget {
                       Text(
                         'Zone: ${lot['zone_type']}',
                         style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
+                          fontSize: 16,
+                          color: Colors.black54,
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -61,12 +95,12 @@ class SensorInfoScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0), 
+                        borderRadius: BorderRadius.circular(8.0),
                         child: LinearProgressIndicator(
-                          value: (lot['total_spots'] - lot['available_spots']) / lot['total_spots'],
-                          minHeight: 12, 
+                          value: filledPercentage,
+                          minHeight: 12,
                           backgroundColor: Colors.grey[300],
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.green), 
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                         ),
                       ),
                       const SizedBox(height: 4),
