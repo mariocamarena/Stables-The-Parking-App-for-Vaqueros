@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'rewards_screen.dart';
-//import 'map_screen.dart';
+import 'map_screen.dart';
 import 'settings_screen.dart';
 import 'account_screen.dart';
 import '../utils/constants.dart';
@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const SensorInfoScreen(),
     const RewardsScreen(),
-    //const MapScreen(),
+    const MapScreen(),
     const SettingsScreen(),
     const AccountScreen(),
   ];
