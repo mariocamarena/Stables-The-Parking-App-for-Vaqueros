@@ -1,6 +1,6 @@
 {
-    "name": "frontend_stables",
-    "short_name": "frontend_stables",
+    "name": "flutter_frontendtrial",
+    "short_name": "flutter_frontendtrial",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

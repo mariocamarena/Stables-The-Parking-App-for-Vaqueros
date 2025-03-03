@@ -43,3 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+build/
+ios/Pods/
+macos/Pods/
+*.xcworkspace
+*.xcuserstate
+*.lock
+
+/lib/config/secret.dart

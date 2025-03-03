@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'rewards_screen.dart';
 import 'map_screen.dart';
-import 'settings_screen.dart';
+// import 'settings_screen.dart';
 import 'account_screen.dart';
 import '../utils/constants.dart';
 
@@ -26,8 +26,9 @@ class _MainScreenState extends State<MainScreen> {
     const SensorInfoScreen(),
     const RewardsScreen(),
     const MapScreen(),
-    const SettingsScreen(),
+    //const SettingsScreen(),
     const AccountScreen(),
+
   ];
 
   void _onItemTapped(int index) {
@@ -40,9 +41,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.utgrvOrange,//UTRGV Orange
-        title: const Text('Stables - UTRGV Parking App',
-            style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.utgrvOrange, // UTRGV Orange
+        title: const Text('Stables - UTRGV Parking App', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
@@ -59,19 +59,15 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            const Color.fromARGB(255, 241, 200, 157), // UTRGV Orange
+        selectedItemColor: const Color.fromARGB(255, 241, 200, 157), // UTRGV Orange
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.white,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), label: 'Rewards'),
+          BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: 'Rewards'),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_box), label: 'Account'),
+          // BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
         ],
       ),
     );
