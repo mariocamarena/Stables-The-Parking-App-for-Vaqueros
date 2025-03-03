@@ -4,6 +4,8 @@ const sqlite3 = require('sqlite3').verbose();
 const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
+app.use(cors({ origin: 'http://localhost:5500' }));
 
 const db = new sqlite3.Database('');
 

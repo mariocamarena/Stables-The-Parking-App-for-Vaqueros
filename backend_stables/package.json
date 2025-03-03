@@ -5,13 +5,14 @@
   "main": "server.js",
   "scripts": {
     "backend": "node server.js",
-    "frontend": "cd ../frontend_stables && flutter run -d windows",
+    "frontend": "cd ../frontend_stables && flutter run -d chrome --web-port=5500",
     "start": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "geolib": "^3.3.4",
     "sqlite3": "^5.1.7"
