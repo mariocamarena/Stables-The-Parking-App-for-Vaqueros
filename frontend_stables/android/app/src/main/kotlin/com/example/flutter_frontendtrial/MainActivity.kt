@@ -1,4 +1,4 @@
-package com.example.frontend_stables
+package com.example.flutter_frontendtrial
 
 import io.flutter.embedding.android.FlutterActivity
 

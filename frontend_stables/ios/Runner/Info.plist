@@ -2,18 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to show the map.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need access to your location to show the map.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Frontend Stables</string>
+	<string>Flutter Frontendtrial</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>GMSApiKey</key>
+    <string>AIzaSyA622jt9zHj3qs8L5jdyCwMvpYxEXXvH8k</string>
 	<key>CFBundleName</key>
-	<string>frontend_stables</string>
+	<string>flutter_frontendtrial</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
