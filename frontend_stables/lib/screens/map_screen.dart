@@ -33,7 +33,7 @@ class MapScreen extends StatelessWidget {
                     "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                 additionalOptions: {
                   'accessToken':
-                      mapboxToken,
+                      Config.mapboxToken,
                 },
               ),
             ],

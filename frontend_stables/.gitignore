@@ -53,3 +53,8 @@ macos/Pods/
 *.lock
 
 /lib/config/secret.dart
+
+#frontend_stables/build/
+
+
+ios/build/
