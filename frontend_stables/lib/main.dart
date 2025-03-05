@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/main_screen.dart';
 import 'utils/constants.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> main() async {
-  // Load the environment variables from a .env file
-  await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
-}
+// Future<void> main() async {
+//   // Load the environment variables from a .env file
+//   await dotenv.load(fileName: ".env");
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
