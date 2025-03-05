@@ -8,6 +8,8 @@ class MapScreen extends StatelessWidget {
   const MapScreen({Key? key}) : super(key: key);
 
   final LatLng _initialPosition = const LatLng(26.303328, -98.170846);
+  static const mapboxToken = String.fromEnvironment('MAPBOX_TOKEN', defaultValue: 'NO_TOKEN');
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class MapScreen extends StatelessWidget {
                     "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                 additionalOptions: {
                   'accessToken':
-                      Config.mapboxToken,
+                      mapboxToken,
                 },
               ),
             ],
