@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 //start server
 
-const dataPath = path.join(__dirname, 'data/simulated_data.json');
+const dataPath = path.join(__dirname, 'backend_stables/data/simulated_data.json');
 
 function updateSimulatedData(){
   const pythonProcess = spawn('python', ['scripts/sensor_data.py']);
