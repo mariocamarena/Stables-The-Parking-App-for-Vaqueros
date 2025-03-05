@@ -5,7 +5,11 @@ const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:5500' }));
+// app.use(cors({ origin: 'http://localhost:5500' }));
+require('dotenv').config();
+
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+app.use(cors({ origin: frontendUrl }));
 
 const db = new sqlite3.Database('');
 
@@ -16,7 +20,7 @@ app.get('/', (req, res) => {
 
 //start server
 
-const dataPath = path.join(__dirname, 'data/simulated_data.json');
+const dataPath = path.join(__dirname, 'backend_stables/data/simulated_data.json');
 
 function updateSimulatedData(){
   const pythonProcess = spawn('python', ['scripts/sensor_data.py']);
