@@ -12,6 +12,8 @@
 .swiftpm/
 migrate_working_dir/
 
+.env
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -45,7 +47,7 @@ app.*.map.json
 /android/app/release
 
 
-build/
+/build/acd3b2920c5e5ae5d641d95704172a34
 ios/Pods/
 macos/Pods/
 *.xcworkspace
@@ -55,6 +57,3 @@ macos/Pods/
 /lib/config/secret.dart
 
 #frontend_stables/build/
-
-
-ios/build/
