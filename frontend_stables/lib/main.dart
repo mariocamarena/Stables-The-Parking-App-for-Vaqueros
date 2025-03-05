@@ -6,7 +6,10 @@ import 'utils/constants.dart';
 Future<void> main() async {
   // Load the environment variables from a .env file
   // await dotenv.load(fileName: ".env");
+  const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'NO_VALUE');
+  print('API_URL: $apiUrl');
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {

@@ -7,7 +7,8 @@ class SensorService {
   //static const String _sensorUrl = 'http://localhost:3000/parking';
 
   static Future<List<dynamic>> fetchSensorData() async {
-    final sensorUrl = '${Config.apiUrl}/parking';
+    const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'NO_VALUE');
+    final sensorUrl = '$apiUrl/parking';
     final response = await http.get(Uri.parse(sensorUrl));
     if (response.statusCode == 200) {
       return json.decode(response.body) as List<dynamic>;
