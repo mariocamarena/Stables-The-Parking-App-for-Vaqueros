@@ -6,13 +6,28 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 // app.use(cors({ origin: 'http://localhost:5500' }));
+const db = new sqlite3.Database('');
 require('dotenv').config();
 
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app';
-const frontendUrl = 'https://stables-utrgv-parking-app.web.app' && 'http://localhost:5500';
-app.use(cors({ origin: frontendUrl }));
+// const frontendUrl = 'https://stables-utrgv-parking-app.web.app' && 'http://localhost:5500';
+// app.use(cors({ origin: frontendUrl }));
 
-const db = new sqlite3.Database('');
+const allowedOrigins = [
+  'http://localhost:5500',
+  'https://stables-utrgv-parking-app.web.app',  
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 
 app.get('/', (req, res) => {
