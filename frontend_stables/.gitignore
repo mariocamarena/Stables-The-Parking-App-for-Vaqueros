@@ -5,7 +5,7 @@
 *.swp
 .DS_Store
 .atom/
-.build/
+#.build/
 .buildlog/
 .history
 .svn/
@@ -53,4 +53,3 @@ macos/Pods/
 *.xcuserstate
 *.lock
 
-#frontend_stables/build/
