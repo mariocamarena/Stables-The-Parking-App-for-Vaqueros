@@ -53,6 +53,4 @@ macos/Pods/
 *.xcuserstate
 *.lock
 
-/lib/config/secret.dart
-
 #frontend_stables/build/

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'screens/main_screen.dart';
 import 'utils/constants.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'config/secret.dart';
 
 Future<void> main() async {
-  // Load the environment variables from a .env file
-  // await dotenv.load(fileName: ".env");
-  const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'NO_VALUE');
-  print('API_URL: $apiUrl');
+  //await dotenv.load(fileName: ".env");
+  // const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:3000');
+  // print('API_URL: $apiUrl');
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Config.init();
+
   runApp(const MyApp());
 
 }
