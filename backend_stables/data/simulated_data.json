@@ -3,8 +3,8 @@
         "lot_id": "Lot_A",
         "zone_type": "zone_1",
         "total_spots": 50,
-        "available_spots": 38,
-        "updated_at": "2025-03-11 02:53:38.475130+00:00",
+        "available_spots": 36,
+        "updated_at": "2025-03-11 05:46:34.749392+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_A_Spot_1",
@@ -52,11 +52,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_12",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_13",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_14",
@@ -168,7 +168,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_41",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_42",
@@ -188,15 +188,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_46",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_47",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_48",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_49",
@@ -212,8 +212,8 @@
         "lot_id": "Lot_B",
         "zone_type": "zone_2",
         "total_spots": 30,
-        "available_spots": 23,
-        "updated_at": "2025-03-11 02:53:38.475130+00:00",
+        "available_spots": 19,
+        "updated_at": "2025-03-11 05:46:34.749392+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_B_Spot_1",
@@ -221,7 +221,7 @@
             },
             {
                 "spot_id": "Lot_B_Spot_2",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_B_Spot_3",
@@ -237,7 +237,7 @@
             },
             {
                 "spot_id": "Lot_B_Spot_6",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_B_Spot_7",
@@ -253,11 +253,11 @@
             },
             {
                 "spot_id": "Lot_B_Spot_10",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_B_Spot_11",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_B_Spot_12",
@@ -342,7 +342,7 @@
         "zone_type": "zone_3",
         "total_spots": 40,
         "available_spots": 30,
-        "updated_at": "2025-03-11 02:53:38.475130+00:00",
+        "updated_at": "2025-03-11 05:46:34.749392+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_C_Spot_1",
@@ -370,7 +370,7 @@
             },
             {
                 "spot_id": "Lot_C_Spot_7",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_C_Spot_8",
@@ -502,7 +502,7 @@
             },
             {
                 "spot_id": "Lot_C_Spot_40",
-                "status": "occupied"
+                "status": "available"
             }
         ]
     }
