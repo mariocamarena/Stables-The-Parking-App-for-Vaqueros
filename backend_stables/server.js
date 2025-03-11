@@ -5,8 +5,7 @@ const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-// app.use(cors({ origin: 'http://localhost:5500' }));
-const db = new sqlite3.Database('');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app';
@@ -29,10 +28,45 @@ app.use(cors({
   }
 }));
 
+app.use(express.json());
+
+
+const dbPath = process.env.SQLITE_DB_PATH || './data/users.db';
+const userDb = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Error connecting to users database:', err.message);
+  } else {
+    console.log('Connected to the users database.');
+  }
+});
+
+app.post('/login', (req, res) => {
+  console.log("IN")
+  const { email, password } = req.body;
+  userDb.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    bcrypt.compare(password, user.password, (err, result) => {
+      if (result) {
+        res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone });
+      } else {
+        res.status(401).json({ error: 'Invalid email or password' });
+      }
+    });
+  });
+});
+
+
 
 app.get('/', (req, res) => {
   res.send('Stables API running...');
 });
+
 
 //start server
 
