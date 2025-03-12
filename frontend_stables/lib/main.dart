@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MainScreen(title: "Stables Main Screen",),
+      // home: const MainScreen(title: "Stables Main Screen",),
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginScreen(),
