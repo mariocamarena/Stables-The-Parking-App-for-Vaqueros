@@ -16,7 +16,7 @@ async function createUsersTable() {
     console.log('Users table created (if it did not exist).');
   } catch (err) {
     console.error('Error creating users table:', err.message);
-    process.exit(1);
+    throw err;
   }
 }
 
@@ -43,11 +43,15 @@ async function insertTestUsers() {
   }
 }
 
-async function migrate() {
-  await createUsersTable();
-  await insertTestUsers();
-  console.log('Migration complete.');
-  process.exit();
+async function runMigrations() {
+  try {
+    await createUsersTable();
+    await insertTestUsers();
+    console.log('Migration complete.');
+  } catch(err) {
+    console.error("Migration failed: ", err.message);
+    throw err;
+  }
 }
 
-migrate();
+module.exports = { runMigrations };

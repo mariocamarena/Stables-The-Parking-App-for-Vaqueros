@@ -13,6 +13,9 @@ require('dotenv').config();
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app' && 'http://localhost:5500';
 // app.use(cors({ origin: frontendUrl }));
 
+const { runMigrations } = require('./scripts/generate_db');
+
+
 const allowedOrigins = [
   'http://localhost:5500',
   'https://stables-utrgv-parking-app.web.app',
@@ -106,4 +109,14 @@ app.get('/dashboard', (req,res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+(async () => {
+  try {
+    await runMigrations();
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (err) {
+    console.error('Server startup aborted due to migration failure:', err.message);
+    process.exit(1);
+  }
+})();
