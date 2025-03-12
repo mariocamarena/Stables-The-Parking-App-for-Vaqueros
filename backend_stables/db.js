@@ -1,8 +1,13 @@
-
 const { Pool } = require('pg');
+require('dotenv').config();
+
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:0000@127.0.0.1:5432/users_01';
+const ssl = connectionString.includes('127.0.0.1') ? false : { rejectUnauthorized: false };
+
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgres://postgres:0000@127.0.0.1:5432/users_01',
+  connectionString,
+  ssl,
 });
 
 module.exports = {
