@@ -15,7 +15,8 @@ require('dotenv').config();
 
 const allowedOrigins = [
   'http://localhost:5500',
-  'https://stables-utrgv-parking-app.web.app',  
+  'https://stables-utrgv-parking-app.web.app',
+  'https://stables-the-parking-app-for-vaqueros.onrender.com'  
 ];
 
 app.use(cors({
