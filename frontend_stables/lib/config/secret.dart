@@ -1,0 +1,1 @@
+const mapboxToken = 'pk.eyJ1IjoibWFyaW9jYW1hcmVuYSIsImEiOiJjbTd0ZTFmcXMwbjZkMm1wbGtuOHhsN205In0.OaGz5OrTQz4rllpBs9nDGw';
