@@ -8,6 +8,8 @@ class MapScreen extends StatelessWidget {
   const MapScreen({Key? key}) : super(key: key);
 
   final LatLng _initialPosition = const LatLng(26.303328, -98.170846);
+  //static const mapboxToken = String.fromEnvironment('MAPBOX_TOKEN', defaultValue: 'pk.eyJ1IjoibWFyaW9jYW1hcmVuYSIsImEiOiJjbTd0dGQycjcyMjl6MmxxOGQ1Z2MwaDBnIn0.pEEhIAoLxjHmP2_2y5bdBw');
+
 
   @override
   Widget build(BuildContext context) {

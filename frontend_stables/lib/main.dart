@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'screens/main_screen.dart';
 import 'utils/constants.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'config/secret.dart';
+import 'screens/login_screen.dart';
 
 Future<void> main() async {
-  // Load the environment variables from a .env file
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
+  // const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:3000');
+  // print('API_URL: $apiUrl');
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Config.init();
+
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +36,13 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MainScreen(title: "Stables Main Screen",),
+      // home: const MainScreen(title: "Stables Main Screen",),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/main': (context) => const MainScreen(title: "Stables Main Screen"),
+      },      
+
     );
   }
 }

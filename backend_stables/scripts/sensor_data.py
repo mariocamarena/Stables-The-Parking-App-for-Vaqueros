@@ -106,7 +106,7 @@ def generate_data(debug_mode = None):
     ]
 
     # prev data
-    prev_data_file = "backend_stables/data/simulated_data.json"
+    prev_data_file = "data/simulated_data.json"
     prev_dir = os.path.dirname(prev_data_file)
     os.makedirs(prev_dir, exist_ok=True)
     
@@ -159,7 +159,7 @@ def generate_data(debug_mode = None):
 
         # print(f"parking id: {lot["lot_id"]} total lots: {lot["total_spots"]}")
 
-    with open("backend_stables/data/simulated_data.json", "w") as f:
+    with open("data/simulated_data.json", "w") as f:
         json.dump(simulated_data, f, indent=4)
     print("...data generated")
 

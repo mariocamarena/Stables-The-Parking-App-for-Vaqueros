@@ -5,7 +5,7 @@
 *.swp
 .DS_Store
 .atom/
-.build/
+#.build/
 .buildlog/
 .history
 .svn/
@@ -47,13 +47,9 @@ app.*.map.json
 /android/app/release
 
 
-/build/acd3b2920c5e5ae5d641d95704172a34
 ios/Pods/
 macos/Pods/
 *.xcworkspace
 *.xcuserstate
 *.lock
 
-/lib/config/secret.dart
-
-#frontend_stables/build/
