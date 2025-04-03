@@ -36,7 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
       
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/main', arguments: {
+          'userEmail': responseData['email'],
+          'userName': responseData['email'].split('@')[0], // Example: derive name from email
+        });
       } else {
         setState(() {
           _errorMessage = 'Invalid email or password';

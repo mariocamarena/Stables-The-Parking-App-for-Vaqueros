@@ -40,7 +40,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/main': (context) => const MainScreen(title: "Stables Main Screen"),
+        //'/main': (context) => const MainScreen(title: "Stables Main Screen"),
+        '/main': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; 
+          return MainScreen(title: "Stables Main Screen", userData: args);
+        },
       },      
 
     );

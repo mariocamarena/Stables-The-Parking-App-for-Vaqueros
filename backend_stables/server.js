@@ -68,6 +68,28 @@ app.post('/login', async (req, res) => {
 });
 
 
+app.post('/change-password', async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+  try {
+    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Old password is incorrect' });
+    }
+    const newHash = await bcrypt.hash(newPassword, 10);
+    await db.query('UPDATE users SET password = $1 WHERE email = $2', [newHash, email]);
+    res.json({ message: 'Password updated successfully' });
+  } catch (err) {
+    console.error('Change password error:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 app.get('/', (req, res) => {
   res.send('Stables API running...');
@@ -115,6 +137,59 @@ const PORT = process.env.PORT || 3000;
   try {
     await runMigrations();
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log(` 
+
+             _____ _______       ____  _      ______  _____ 
+            / ____|__   __|/\   |  _ \| |    |  ____|/ ____|
+          | (___    | |  /  \  | |_) | |    | |__  | (___  
+            \___ \   | | / /\ \ |  _ <| |    |  __|  \___ \ 
+            ____) |  | |/ ____ \| |_) | |____| |____ ____) |
+          |_____/   |_/_/    \_\____/|______|______|_____/ 
+                                                            
+                                                  
+      
+      
+                                                  \#    #
+                                              %%% ##   ##
+                                           %%%%% ###%%###
+                                          %%%%% ### %%% #
+                                        %%%%%% ### %%% ###
+                                         %%%% ## %% #######
+                                        %%%%% # %% #O#####
+                                      %%%%%% # % #########
+                                     %%%%% ##### #########
+                           ###        %% ####### #########
+                  %%% ############    ########### ########
+               %%%% ############################### #######
+             %%%%% ################################## ######
+           %%%%%% #################################### #C###
+          %%%%%% #####################################  ###
+          %%%%% #######################################
+         %%%%%% ########################################
+      % %%%%%%% ########################################
+       %%%%%%%%% #######################################
+      %%%%%%%%%% ########################################
+   %%% %%%%%%%%   ###### ################################
+     %%%%%%%%      ###### #################### ##########
+  % %%%%%%%%        ####### ########### ###### ##########
+   %%%%%%%%%         #######  ########### ###### ########
+  %%%%%%%%%%          ##### ###  ######### ####### ######
+   %%%%%%%%%%          #### ##               ####### ####
+   %%%%%%%%%%%           ## #                  ##### ###
+    %%  %% % %%         # ##                      ## ###
+      %   %    %        # ###                      # ###
+                         # ###                     ## ###
+                         # ###                     ## ###
+                         # ####                   #### ##
+                        ### ###                  ##### ###
+                       ####  ###                 ####   ##
+                      #####   ###                 ##    ##
+                     #####    ####                      ###
+                      ##        ###                     ###
+                                 ####                     ##
+                                  ####                    ###
+                                                          ####
+                                                      	   ##`)
   } catch (err) {
     console.error('Server startup aborted due to migration failure:', err.message);
     process.exit(1);
