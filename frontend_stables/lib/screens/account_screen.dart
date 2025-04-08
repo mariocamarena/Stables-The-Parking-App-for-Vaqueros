@@ -231,13 +231,20 @@ class AccountScreen extends StatelessWidget {
           // Notification Settings Section
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Text('Notification Settings', style: Theme.of(context).textTheme.headlineSmall),
+            child: Text('Preference Settings', style: Theme.of(context).textTheme.headlineSmall),
           ),
           SwitchListTile(
             title: const Text('Enable Notifications'),
             value: true, // Replace with dynamic state later
             onChanged: (bool value) {
               // TODO: Save notification preferences
+            },
+          ),
+          SwitchListTile(
+            title: const Text('Enable GPS'),
+            value: true, // Replace with dynamic state later
+            onChanged: (bool value) {
+              // TODO: Save GPS preferences
             },
           ),
           const Divider(),

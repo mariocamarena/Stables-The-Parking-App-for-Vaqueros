@@ -34,14 +34,27 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.utgrvOrange, // UTRGV Orange
+        //backgroundColor: AppColors.utgrvOrange, // UTRGV Orange
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.utgrvOrange, 
+                Color(0xFFFFA040), 
+              ],
+            ),
+          ),
+        ),
         title: const Text('Stables - UTRGV Parking App', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
             onPressed: () {
               setState(() {
-                _selectedIndex = 3; // Switch to Settings tab
+                _selectedIndex = 3; 
               });
             },
           ),
