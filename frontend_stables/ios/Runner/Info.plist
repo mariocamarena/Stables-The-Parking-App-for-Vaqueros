@@ -11,7 +11,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Flutter Frontendtrial</string>
+	<string>STABLES - UTRGV</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,7 +21,7 @@
 	<key>GMSApiKey</key>
     <string>AIzaSyA622jt9zHj3qs8L5jdyCwMvpYxEXXvH8k</string>
 	<key>CFBundleName</key>
-	<string>flutter_frontendtrial</string>
+	<string>STABLES - UTRGV</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

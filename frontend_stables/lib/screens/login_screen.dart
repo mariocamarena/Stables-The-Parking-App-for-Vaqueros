@@ -83,11 +83,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    // We remove the AppBar to avoid redundancy and let the brand card be the focus.
     return Scaffold(
       body: Stack(
         children: [
-          // Stronger Background Gradient
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -118,12 +116,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Brand / Logo Section with potential custom icon
                       Column(
                         children: [
-                          // Replace with a horse silhouette or custom brand asset
                           Icon(
-                            Icons.directions_run, // placeholder for "horse"
+                            Icons.directions_run, 
                             size: 80,
                             color: AppColors.primary,
                           ),
@@ -212,8 +208,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                               ),
                       ),
                       const SizedBox(height: 16),
-
-                      // "Forgot Password?" link aligned to the right
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
