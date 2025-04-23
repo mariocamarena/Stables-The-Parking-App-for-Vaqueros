@@ -1,65 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-import '../config/secret.dart'; // :contentReference[oaicite:0]{index=0}
+
+import '../config/secret.dart';
 import '../utils/constants.dart';
-
-/// Configuration for each lot is defined here.
-/// For now we focus on Lot_A.
-final Map<String, Map<String, dynamic>> lotConfigurations = {
-  "Lot_A": {
-    "boundingBox": [
-      LatLng(26.303600, -98.170800), // Top left
-      LatLng(26.303400, -98.170600)  // Bottom right
-    ],
-    "rows": 5,
-    "cols": 10,
-  },
-};
-
-/// Generates the polygon for a parking spot within a lot using a grid-based approach.
-/// The spotIndex is 0-indexed (e.g., first spot is index 0 which becomes "Lot_A_Spot_1").
-List<LatLng> generateSpotPolygon(String lotId, int spotIndex) {
-  final config = lotConfigurations[lotId];
-  if (config == null) {
-    return [];
-  }
-  final List<LatLng> box = config["boundingBox"];
-  final int rows = config["rows"];
-  final int cols = config["cols"];
-
-  // Calculate the height and width of the bounding box.
-  final double totalLat = box[0].latitude - box[1].latitude; // vertical difference
-  final double totalLng = box[1].longitude - box[0].longitude; // horizontal difference
-
-  // Dimensions of each grid cell.
-  final double cellLat = totalLat / rows;
-  final double cellLng = totalLng / cols;
-
-  // Determine the row and column for this spot.
-  final int row = spotIndex ~/ cols;
-  final int col = spotIndex % cols;
-
-  // Calculate boundaries for the cell.
-  final double cellTop = box[0].latitude - row * cellLat;
-  final double cellLeft = box[0].longitude + col * cellLng;
-  final double cellBottom = cellTop - cellLat;
-  final double cellRight = cellLeft + cellLng;
-
-  // Apply padding to better mimic real-world, non-perfect square spots.
-  final double latPadding = cellLat * 0.1;
-  final double lngPadding = cellLng * 0.1;
-
-  return [
-    LatLng(cellTop - latPadding, cellLeft + lngPadding),
-    LatLng(cellTop - latPadding, cellRight - lngPadding),
-    LatLng(cellBottom + latPadding, cellRight - lngPadding),
-    LatLng(cellBottom + latPadding, cellLeft + lngPadding),
-  ];
-}
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -69,37 +18,66 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  // For centering the map on Lot_A.
-  final LatLng _initialPosition = const LatLng(26.303500, -98.170700);
+  //    Top-Left of Lot A
+  final LatLng _gridTopLeft     = const LatLng(26.303848, -98.171352);
+  //    Bottom-Right of Lot A
+  final LatLng _gridBottomRight = const LatLng(26.302832, -98.170389);
+  final int _rows = 12, _cols = 38;
+
+
+  final LatLngBounds _lotABounds = LatLngBounds(
+    // SW = bottom-left stall
+    const LatLng(26.302992, -98.171515),
+    // NE = top-right stall
+    const LatLng(26.303622, -98.169870),
+  );
+
+  // 3) Rotation setup (unchanged)
+  final double _rotationAngle = -0.1745; // ~ –10°
+  late final LatLng _rotationCenter;
+
+  // 4) Map init (unchanged)
+  final LatLng _initialCenter = const LatLng(26.303400, -98.170700);
+  final MapController _mapController = MapController();
+  late final MapOptions _mapOptions;
+
   Timer? _timer;
-  List<dynamic> _parkingData = [];
+  List<dynamic> _spots = [];
 
   @override
   void initState() {
     super.initState();
+
+    _rotationCenter = LatLng(
+      (_gridTopLeft.latitude + _gridBottomRight.latitude) / 2,
+      (_gridTopLeft.longitude + _gridBottomRight.longitude) / 2,
+    );
+
+    _mapOptions = MapOptions(
+      initialCenter: _initialCenter,
+      initialZoom: 20.0,
+      minZoom: 18.0,
+      maxZoom: 21.0,
+      cameraConstraint: CameraConstraint.contain(bounds: _lotABounds),
+      interactionOptions: const InteractionOptions(
+        flags: InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom,
+      ),
+    );
+
     _fetchParkingData();
-    // Refresh parking data every 5 seconds.
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      _fetchParkingData();
-    });
+    _timer = Timer.periodic(const Duration(seconds: 5), (_) => _fetchParkingData());
   }
 
   Future<void> _fetchParkingData() async {
     try {
       final apiUrl = await Config.getApiUrl();
-      final response = await http.get(Uri.parse('$apiUrl/parking'));
-      if (response.statusCode == 200) {
-        List<dynamic> data = json.decode(response.body);
-        // Filter so that only Lot_A is used.
-        setState(() {
-          _parkingData = data.where((lot) => lot["lot_id"] == "Lot_A").toList();
-        });
-      } else {
-        debugPrint('Error fetching parking data: ${response.statusCode}');
+      final resp   = await http.get(Uri.parse('$apiUrl/parking'));
+      if (resp.statusCode == 200) {
+        final all  = json.decode(resp.body) as List<dynamic>;
+        final lotA = all.firstWhere((l) => l['lot_id']=='Lot_A');
+        setState(() => _spots = lotA['parking_status'] as List<dynamic>);
       }
-    } catch (error) {
-      debugPrint('Error fetching parking data: $error');
-    }
+    } catch (_) {/* ignore */}
   }
 
   @override
@@ -108,63 +86,105 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
-  /// Determines the color for an individual spot based on its status.
-  Color _spotColor(String status) {
-    if (status == "occupied") {
-      return Colors.red.withOpacity(0.7);
-    } else {
-      return Colors.green.withOpacity(0.7);
-    }
+  Color _spotColor(int idx) {
+    final status = (_spots[idx]['status'] as String).toLowerCase();
+    return status == 'available'
+      ? Colors.green.withOpacity(0.7)
+      : Colors.red.withOpacity(0.7);
+  }
+
+  List<LatLng> _cellPolygon(int row, int col) {
+    final latSpan = _gridTopLeft.latitude   - _gridBottomRight.latitude;
+    final lngSpan = _gridBottomRight.longitude - _gridTopLeft.longitude;
+    final cellLat = latSpan / _rows;
+    final cellLng = lngSpan / _cols;
+
+    final north = _gridTopLeft.latitude   - row * cellLat;
+    final south = north              - cellLat;
+    final west  = _gridTopLeft.longitude + col * cellLng;
+    final east  = west               + cellLng;
+    final padLat = cellLat * 0.05, padLng = cellLng * 0.05;
+
+    final corners = [
+      LatLng(north - padLat, west  + padLng),
+      LatLng(north - padLat, east  - padLng),
+      LatLng(south + padLat, east  - padLng),
+      LatLng(south + padLat, west  + padLng),
+    ];
+
+    final cosA = cos(_rotationAngle), sinA = sin(_rotationAngle);
+    return corners.map((pt) {
+      final dx = pt.longitude - _rotationCenter.longitude;
+      final dy = pt.latitude  - _rotationCenter.latitude;
+      final lng = dx * cosA - dy * sinA + _rotationCenter.longitude;
+      final lat = dx * sinA + dy * cosA + _rotationCenter.latitude;
+      return LatLng(lat, lng);
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Polygon> spotPolygons = [];
-
-    // Process only Lot_A parking data.
-    if (_parkingData.isNotEmpty) {
-      final lot = _parkingData[0]; // Should be Lot_A.
-      final String lotId = lot["lot_id"] as String;
-      final List<dynamic> spots = lot["parking_status"] as List<dynamic>;
-      for (int i = 0; i < spots.length; i++) {
-        final spot = spots[i];
-        final String status = spot["status"] as String;
-        // Generate the polygon based on the spot index.
-        final List<LatLng> spotPolygon = generateSpotPolygon(lotId, i);
-        if (spotPolygon.isNotEmpty) {
-          spotPolygons.add(
-            Polygon(
-              points: spotPolygon,
-              borderColor: _spotColor(status).withOpacity(0.9),
-              borderStrokeWidth: 1,
-              color: _spotColor(status),
-            ),
-          );
-        }
+    final polygons = <Polygon>[];
+    for (var r = 0; r < _rows; r++) {
+      for (var c = 0; c < _cols; c++) {
+        final idx = r * _cols + c;
+        if (idx >= _spots.length) break;
+        polygons.add(Polygon(
+          points: _cellPolygon(r, c),
+          color: _spotColor(idx),
+          borderColor: _spotColor(idx).withOpacity(0.9),
+          borderStrokeWidth: 1,
+        ));
       }
     }
 
+    final latSpan = _lotABounds.northEast.latitude  - _lotABounds.southWest.latitude;
+    final lngSpan = _lotABounds.northEast.longitude - _lotABounds.southWest.longitude;
+    final aspectRatio = lngSpan / latSpan;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Parking Spots Map"),
+        title: const Text('Parking Spots Map'),
         backgroundColor: AppColors.utgrvOrange,
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          initialCenter: _initialPosition,
-          initialZoom: 19.0,
-        ),
+      body: Column(
         children: [
-          TileLayer(
-            urlTemplate:
-                "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
-            additionalOptions: {
-              'accessToken': Config.mapboxToken,
-            },
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'UTRGV Parking Lot A',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-          // Render overlays only for Lot_A.
-          PolygonLayer(
-            polygons: spotPolygons,
+          const SizedBox(height: 12),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Align(
+                alignment: Alignment.center,
+                child: AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: FlutterMap(
+                      mapController: _mapController,
+                      options: _mapOptions,
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                            'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}',
+                          additionalOptions: {
+                            'accessToken': Config.mapboxToken,
+                          },
+                        ),
+                        PolygonLayer(polygons: polygons),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
