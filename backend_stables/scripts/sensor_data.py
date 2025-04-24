@@ -100,7 +100,7 @@ def generate_data(debug_mode = None):
 
 
     parking_lots = [
-        {"lot_id": "Lot_A", "zone_id": "zone_1", "total_spots": 456},
+        {"lot_id": "Lot_A", "zone_id": "zone_1", "total_spots": 492},
         {"lot_id": "Lot_B","zone_id": "zone_2" ,"total_spots": 30},
         {"lot_id": "Lot_C","zone_id": "zone_3" ,"total_spots": 40}
     ]
