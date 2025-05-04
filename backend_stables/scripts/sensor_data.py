@@ -159,9 +159,11 @@ def generate_data(debug_mode = None):
 
         # print(f"parking id: {lot["lot_id"]} total lots: {lot["total_spots"]}")
 
-    with open("data/simulated_data.json", "w") as f:
+    with open(prev_data_file, "r+") as f:
+        f.seek(0)
         json.dump(simulated_data, f, indent=4)
-    print("...data generated")
+        f.truncate()
+    print("…data generated")
 
 if __name__ == "__main__":
 

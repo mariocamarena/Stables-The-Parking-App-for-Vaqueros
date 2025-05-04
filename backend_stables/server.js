@@ -8,6 +8,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const db = require('./db');
 require('dotenv').config();
+const claimedSpots = new Map();
 
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app';
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app' && 'http://localhost:5500';
@@ -89,6 +90,33 @@ app.post('/change-password', async (req, res) => {
   }
 });
 
+app.post('/parking/claim', (req, res) => {
+  const { spot_id, user_id } = req.body;
+  if (!spot_id || !user_id) {
+    return res.status(400).json({ error: 'Missing spot_id or user_id' });
+  }
+  const existing = claimedSpots.get(spot_id);
+  if (existing && existing !== user_id) {
+    return res.status(409).json({ error: 'Spot already taken' });
+  }
+  claimedSpots.set(spot_id, user_id);
+  res.json({ success: true, spot_id });
+});
+
+app.post('/parking/unclaim', (req, res) => {
+  const { spot_id, user_id } = req.body;
+  if (!spot_id || !user_id) {
+    return res.status(400).json({ error: 'Missing spot_id or user_id' });
+  }
+  const existing = claimedSpots.get(spot_id);
+  if (existing !== user_id) {
+
+    return res.status(403).json({ error: 'Cannot unclaim this spot' });
+  }
+  claimedSpots.delete(spot_id);
+  res.json({ success: true, spot_id });
+});
+
 
 
 app.get('/', (req, res) => {
@@ -112,19 +140,41 @@ updateSimulatedData();
 setInterval(updateSimulatedData, 1000);
 
 
-app.get('/parking',(req,res) => {
-  // res.json({
-  //   lot_id: 'LOT_E16',
-  //   zone_type: 'zone_2',
-  //   total_spots: 5,
-  //   available_spots: 2,
-  //   updated_at: new Date().toISOString()
-  // });
+// app.get('/parking',(req,res) => {
+//   // res.json({
+//   //   lot_id: 'LOT_E16',
+//   //   zone_type: 'zone_2',
+//   //   total_spots: 5,
+//   //   available_spots: 2,
+//   //   updated_at: new Date().toISOString()
+//   // });
 
-  const data = fs.readFileSync(dataPath, 'utf8');
-  const parsedData = JSON.parse(data);
-  res.json(parsedData);
+//   const data = fs.readFileSync(dataPath, 'utf8');
+//   const parsedData = JSON.parse(data);
+//   res.json(parsedData);
+// });
+
+app.get('/parking', (req, res) => {
+  const userId = req.query.user_id;
+
+  const raw = fs.readFileSync(dataPath, 'utf8');
+  const payload = JSON.parse(raw);
+
+  payload.forEach(lot => {
+    lot.parking_status = lot.parking_status.map(spot => {
+      const claimer = claimedSpots.get(spot.spot_id);
+      if (claimer === userId) {
+        return { ...spot, status: 'claimed' }; 
+      } else if (claimer) {
+        return { ...spot, status: 'taken' };   
+      }
+      return spot;                             
+    });
+  });
+
+  res.json(payload);
 });
+
 
 app.get('/dashboard', (req,res) => {
   res.sendFile(path.join(__dirname, 'scripts', 'dashboard.html'));

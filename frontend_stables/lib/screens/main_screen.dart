@@ -25,7 +25,10 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> _screens = [
       const SensorInfoScreen(),
       const RewardsScreen(),
-      const MapScreen(),
+      MapScreen(
+      userId:   widget.userData?['userId']   as String, 
+      userName: widget.userData?['userName'] as String,
+      ),
       AccountScreen(
         userName: widget.userData?['userName'] ?? 'Student Name',
         userEmail: widget.userData?['userEmail'] ?? 'student@utrgv.edu',

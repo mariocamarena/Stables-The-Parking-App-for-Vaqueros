@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         Navigator.pushReplacementNamed(context, '/main', arguments: {
+          'userId':    responseData['id'].toString(),
           'userEmail': responseData['email'],
           'userName': responseData['email'].split('@')[0],
         });
