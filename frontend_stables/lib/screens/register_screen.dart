@@ -5,17 +5,16 @@ import 'dart:async';
 import '../config/secret.dart';
 import '../utils/constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-  
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
   bool _isLoading = false;
   String? _errorMessage;
   bool _obscurePassword = true;
@@ -34,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     _fadeController.forward();
   }
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     final email = _emailController.text.trim();
 
     setState(() {
@@ -42,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       _errorMessage = null;
     });
 
-    // Domain validation
     if (!email.endsWith('@utrgv.edu')) {
       setState(() {
         _isLoading = false;
@@ -54,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     try {
       final apiUrl = await Config.getApiUrl();
       final response = await http.post(
-        Uri.parse('$apiUrl/login'),
+        Uri.parse('$apiUrl/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email': email,
@@ -62,38 +60,14 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         }),
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final role = data['role'] ?? 'user';
-
-        // Role‑based navigation
-        if (role == 'admin') {
-          Navigator.pushReplacementNamed(
-            context,
-            '/admin',
-            arguments: {
-              'userId':    data['id'].toString(),
-              'userEmail': data['email'],
-              'userName':  data['email'].split('@')[0],
-            },
-          );
-        } else {
-          Navigator.pushReplacementNamed(
-            context,
-            '/main',
-            arguments: {
-              'userId':    data['id'].toString(),
-              'userEmail': data['email'],
-              'userName':  data['email'].split('@')[0],
-            },
-          );
-        }
+      if (response.statusCode == 201) {
+        Navigator.pop(context);
       } else {
         setState(() {
-          _errorMessage = 'Invalid email or password';
+          _errorMessage = 'Registration failed';
         });
       }
-    } catch (e) {
+    } catch (error) {
       setState(() {
         _errorMessage = 'Error connecting to the server';
       });
@@ -156,14 +130,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                 fontSize: 32,
                               )),
                       const SizedBox(height: 4),
-                      Text('The Parking App for Vaqueros',
+                      Text('Create an account',
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Colors.grey[700],
                                 fontSize: 16,
                               )),
                       const SizedBox(height: 40),
-
-                      // Email field
                       _buildTextField(
                         controller: _emailController,
                         label: 'Email',
@@ -171,8 +143,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                         obscureText: false,
                       ),
                       const SizedBox(height: 20),
-
-                      // Password field with toggle
                       _buildTextField(
                         controller: _passwordController,
                         label: 'Password',
@@ -182,31 +152,34 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             _obscurePassword ? Icons.visibility_off : Icons.visibility,
                             color: Colors.grey,
                           ),
-                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Error message
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: _errorMessage != null
                             ? Padding(
                                 key: const ValueKey('error'),
                                 padding: const EdgeInsets.only(bottom: 12.0),
-                                child: Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+                                child: Text(
+                                  _errorMessage!,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
                               )
                             : const SizedBox(key: ValueKey('no_error')),
                       ),
-
-                      // Login button or loader
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: _isLoading
                             ? const CircularProgressIndicator(key: ValueKey('loader'))
                             : ElevatedButton(
-                                key: const ValueKey('login_button'),
-                                onPressed: _login,
+                                key: const ValueKey('register_button'),
+                                onPressed: _register,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.utgrvOrange,
                                   foregroundColor: Colors.white,
@@ -216,30 +189,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                   ),
                                   elevation: 2,
                                 ),
-                                child: const Text('Login'),
+                                child: const Text('Register'),
                               ),
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Forgot password
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            // TODO: Add password reset logic
-                          },
-                          child: const Text('Forgot Password?', style: TextStyle(color: Colors.grey)),
-                        ),
-                      ),
-
-                      // Register link
-                      Align(
-                        alignment: Alignment.center,
-                        child: TextButton(
-                          onPressed: () => Navigator.pushNamed(context, '/register'),
-                          child: const Text("Don't have an account? Register",
-                              style: TextStyle(color: Colors.blue)),
-                        ),
                       ),
                     ],
                   ),
@@ -265,7 +216,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,

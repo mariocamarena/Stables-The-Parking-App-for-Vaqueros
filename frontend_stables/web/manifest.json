@@ -1,11 +1,11 @@
 {
-    "name": "flutter_frontendtrial",
-    "short_name": "flutter_frontendtrial",
+    "name": "stables_utrgv",
+    "short_name": "stables_utrgv",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "the parking app for vaqueros",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

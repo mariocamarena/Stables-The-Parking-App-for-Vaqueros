@@ -100,7 +100,7 @@ def generate_data(debug_mode = None):
 
 
     parking_lots = [
-        {"lot_id": "Lot_A", "zone_id": "zone_1", "total_spots": 50},
+        {"lot_id": "Lot_A", "zone_id": "zone_1", "total_spots": 492},
         {"lot_id": "Lot_B","zone_id": "zone_2" ,"total_spots": 30},
         {"lot_id": "Lot_C","zone_id": "zone_3" ,"total_spots": 40}
     ]
@@ -159,9 +159,11 @@ def generate_data(debug_mode = None):
 
         # print(f"parking id: {lot["lot_id"]} total lots: {lot["total_spots"]}")
 
-    with open("data/simulated_data.json", "w") as f:
+    with open(prev_data_file, "r+") as f:
+        f.seek(0)
         json.dump(simulated_data, f, indent=4)
-    print("...data generated")
+        f.truncate()
+    print("…data generated")
 
 if __name__ == "__main__":
 
