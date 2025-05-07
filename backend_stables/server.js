@@ -58,7 +58,7 @@ app.post('/login', async (req, res) => {
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) {
-      res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone });
+      res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone, role: user.role }); //
     } else {
       res.status(401).json({ error: 'Invalid email or password' });
     }
@@ -68,6 +68,35 @@ app.post('/login', async (req, res) => {
   }
 });
 
+
+app.post('/register', async (req, res) => {
+  const { email, password } = req.body;
+  console.log("IN /register", req.body);
+
+
+  try {
+    // Check if email already exists
+    const existing = await db.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    );
+
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'Email already registered' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.query(
+      'INSERT INTO users (email, password) VALUES ($1, $2)',
+      [email, hashedPassword]
+    );
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (err) {
+    console.error('Registration error:', err.message);
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
 
 app.post('/change-password', async (req, res) => {
   const { email, oldPassword, newPassword } = req.body;
@@ -245,3 +274,24 @@ const PORT = process.env.PORT || 3000;
     process.exit(1);
   }
 })();
+
+app.get('/users', async (req, res) => {
+  try {
+    const result = await db.query('SELECT id, email, role, parking_zone FROM users');
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching users:', err.message);
+    res.status(500).json({ error: 'Failed to retrieve users' });
+  }
+});
+
+app.delete('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    await db.query('DELETE FROM users WHERE id = $1', [userId]);
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Delete error:', err.message);
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+});
