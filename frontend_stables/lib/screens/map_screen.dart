@@ -66,7 +66,6 @@ class _MapScreenState extends State<MapScreen> {
              | InteractiveFlag.drag,
       ),
 
-      // show confirm dialog before claim/unclaim
       onTap: (tapPos, latlng) async {
         final polygons = _buildPolygons();
         final hit = polygons.indexWhere((poly) => _pointInPolygon(latlng, poly.points));
@@ -83,7 +82,6 @@ class _MapScreenState extends State<MapScreen> {
         }
 
         if (status == 'available') {
-          // Confirm claim with userName
           final confirm = await showDialog<bool>(
             context: context,
             builder: (_) => AlertDialog(
@@ -98,13 +96,38 @@ class _MapScreenState extends State<MapScreen> {
           if (confirm != true) return;
 
           final apiUrl = await Config.getApiUrl();
+
+          if (_myClaimedSpotId != null && _myClaimedSpotId != spotId) {
+            await http.post(
+              Uri.parse('$apiUrl/parking/unclaim'),
+              headers: {'Content-Type':'application/json'},
+              body: jsonEncode({
+                'spot_id': _myClaimedSpotId!,
+                'user_id': widget.userId,
+              }),
+            );
+            final oldIdx = _spots.indexWhere((s) => s['spot_id'] == _myClaimedSpotId);
+            if (oldIdx >= 0) {
+              setState(() {
+                _spots[oldIdx]['status'] = 'available';
+              });
+            }
+          }
+
           final resp = await http.post(
             Uri.parse('$apiUrl/parking/claim'),
             headers: {'Content-Type':'application/json'},
             body: jsonEncode({'spot_id': spotId, 'user_id': widget.userId}),
           );
+
           if (resp.statusCode == 200) {
             _myClaimedSpotId = spotId;
+            final newIdx = _spots.indexWhere((s) => s['spot_id'] == spotId);
+            if (newIdx >= 0) {
+              setState(() {
+                _spots[newIdx]['status'] = 'claimed';
+              });
+            }
             await _fetchParkingData();
           } else {
             final msg = json.decode(resp.body)['error'] ?? 'Unable to claim spot';
