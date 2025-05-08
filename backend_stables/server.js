@@ -13,6 +13,7 @@ const claimedSpots = new Map();
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app';
 // const frontendUrl = 'https://stables-utrgv-parking-app.web.app' && 'http://localhost:5500';
 // app.use(cors({ origin: frontendUrl }));
+//
 
 const { runMigrations } = require('./scripts/generate_db');
 
