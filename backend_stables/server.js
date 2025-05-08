@@ -170,41 +170,54 @@ updateSimulatedData();
 setInterval(updateSimulatedData, 1000);
 
 
-// app.get('/parking',(req,res) => {
-//   // res.json({
-//   //   lot_id: 'LOT_E16',
-//   //   zone_type: 'zone_2',
-//   //   total_spots: 5,
-//   //   available_spots: 2,
-//   //   updated_at: new Date().toISOString()
-//   // });
+// app.get('/parking', (req, res) => {
+//   const userId = req.query.user_id;
 
-//   const data = fs.readFileSync(dataPath, 'utf8');
-//   const parsedData = JSON.parse(data);
-//   res.json(parsedData);
+//   const raw = fs.readFileSync(dataPath, 'utf8');
+//   const payload = JSON.parse(raw);
+
+//   payload.forEach(lot => {
+//     lot.parking_status = lot.parking_status.map(spot => {
+//       const claimer = claimedSpots.get(spot.spot_id);
+//       if (claimer === userId) {
+//         return { ...spot, status: 'claimed' }; 
+//       } else if (claimer) {
+//         return { ...spot, status: 'taken' };   
+//       }
+//       return spot;                             
+//     });
+//   });
+
+//   res.json(payload);
 // });
 
-app.get('/parking', (req, res) => {
-  const userId = req.query.user_id;
 
-  const raw = fs.readFileSync(dataPath, 'utf8');
+app.get('/parking', (req, res) => {
+  const userId = req.query.user_id;    // <— if you don't pass this, it's undefined
+
+  // load the raw simulated data (status = "available" or "occupied")
+  const raw     = fs.readFileSync(dataPath, 'utf8');
   const payload = JSON.parse(raw);
 
-  payload.forEach(lot => {
-    lot.parking_status = lot.parking_status.map(spot => {
-      const claimer = claimedSpots.get(spot.spot_id);
-      if (claimer === userId) {
-        return { ...spot, status: 'claimed' }; 
-      } else if (claimer) {
-        return { ...spot, status: 'taken' };   
-      }
-      return spot;                             
+  // only *if* a valid user_id is provided do we map any spot->claimed/taken
+  if (userId) {
+    payload.forEach(lot => {
+      lot.parking_status = lot.parking_status.map(spot => {
+        const claimer = claimedSpots.get(spot.spot_id);
+        if (claimer === userId) {
+          return { ...spot, status: 'claimed' };
+        } else if (claimer) {
+          return { ...spot, status: 'taken' };
+        }
+        return spot;
+      });
     });
-  });
+  }
 
+  // return either the raw available/occupied data (default)
+  // or the augmented claimed/taken data (if you passed ?user_id=...)
   res.json(payload);
 });
-
 
 app.get('/dashboard', (req,res) => {
   res.sendFile(path.join(__dirname, 'scripts', 'dashboard.html'));
