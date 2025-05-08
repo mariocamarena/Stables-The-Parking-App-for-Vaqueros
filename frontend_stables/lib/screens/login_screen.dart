@@ -147,7 +147,19 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.directions_run, size: 80, color: AppColors.primary),
+
+
+
+                      Image.network(
+                        'https://i.imgur.com/dBNn9fJ.jpg', 
+                        width: 80,
+                        height: 80,
+                      ),
+
+
+
+
+
                       const SizedBox(height: 10),
                       Text('STABLES',
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -167,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       _buildTextField(
                         controller: _emailController,
                         label: 'Email',
+                        hint: 'student.01@utrgv.edu',
                         keyboardType: TextInputType.emailAddress,
                         obscureText: false,
                       ),
@@ -176,6 +189,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       _buildTextField(
                         controller: _passwordController,
                         label: 'Password',
+                        hint: 'stables123',
                         obscureText: _obscurePassword,
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -221,17 +235,14 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       ),
                       const SizedBox(height: 16),
 
-                      // Forgot password
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            // TODO: Add password reset logic
-                          },
-                          child: const Text('Forgot Password?', style: TextStyle(color: Colors.grey)),
-                        ),
-                      ),
-
+                      
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () => _showResetDialog(context),
+                              child: const Text('Forgot Password?', style: TextStyle(color: Colors.grey)),
+                            ),
+                          ),
                       // Register link
                       Align(
                         alignment: Alignment.center,
@@ -256,6 +267,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     required TextEditingController controller,
     required String label,
     required bool obscureText,
+    String? hint,
     TextInputType keyboardType = TextInputType.text,
     Widget? suffixIcon,
   }) {
@@ -272,6 +284,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
             obscureText: obscureText,
             decoration: InputDecoration(
               labelText: label,
+              hintText: hint,
               border: const OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.utgrvOrange),
@@ -283,4 +296,81 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       ),
     );
   }
+
+
+  Future<void> _showResetDialog(BuildContext context) async {
+  final emailCtl = TextEditingController();
+  final newCtl   = TextEditingController();
+  final confirmCtl = TextEditingController();
+  String? error;
+
+  await showDialog(
+    context: context,
+    builder: (ctx) => StatefulBuilder(
+      builder: (ctx, setState) => AlertDialog(
+        title: const Text('Reset Password'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: emailCtl,
+              decoration: const InputDecoration(labelText: 'Your email'),
+            ),
+            TextField(
+              controller: newCtl,
+              decoration: const InputDecoration(labelText: 'New password'),
+              obscureText: true,
+            ),
+            TextField(
+              controller: confirmCtl,
+              decoration: const InputDecoration(labelText: 'Confirm password'),
+              obscureText: true,
+            ),
+            if (error != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(error!, style: const TextStyle(color: Colors.red)),
+              ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () async {
+              final email = emailCtl.text.trim();
+              final npw   = newCtl.text;
+              if (npw != confirmCtl.text) {
+                setState(() => error = 'Passwords don’t match');
+                return;
+              }
+              try {
+                final apiUrl = await Config.getApiUrl();
+                final resp = await http.post(
+                  Uri.parse('$apiUrl/change-password'),
+                  headers: {'Content-Type':'application/json'},
+                  body: jsonEncode({
+                    'email': email,
+                    'newPassword': npw
+                  }),
+                );
+                if (resp.statusCode == 200) {
+                  Navigator.pop(ctx);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Password reset! Please log in.'))
+                  );
+                } else {
+                  final body = jsonDecode(resp.body);
+                  setState(() => error = body['error'] ?? 'Reset failed');
+                }
+              } catch (_) {
+                setState(() => error = 'Network error');
+              }
+            },
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 }
