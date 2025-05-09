@@ -32,8 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-    _fadeAnimation = Tween(begin: 0.0, end: 1.0)
-        .animate(_fadeController);
+    _fadeAnimation = Tween(begin: 0.0, end: 1.0).animate(_fadeController);
     _fadeController.forward();
   }
 
@@ -188,11 +187,10 @@ class _RegisterScreenState extends State<RegisterScreen>
                             prefixIcon: Icon(Icons.map),
                             border: OutlineInputBorder(),
                           ),
-                          // ↓↓↓ STYLE THE MENU FOR BETTER LEGIBILITY ↓↓↓
-                          dropdownColor: Colors.white,            // solid white background
-                          elevation: 8,                           // stronger shadow under the menu
-                          style: const TextStyle(color: Colors.black), // black text on white
-                          iconEnabledColor: AppColors.primary,    // keep your theme color for the arrow
+                          dropdownColor: Colors.white,
+                          elevation: 8,
+                          style: const TextStyle(color: Colors.black),
+                          iconEnabledColor: AppColors.primary,
                           items: [1, 2, 3].map((zone) {
                             return DropdownMenuItem(
                               value: zone,
@@ -208,17 +206,15 @@ class _RegisterScreenState extends State<RegisterScreen>
                         SizedBox(
                           width: double.infinity,
                           child: _isLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator())
+                              ? const Center(child: CircularProgressIndicator())
                               : ElevatedButton(
                                   onPressed: _register,
                                   style: ElevatedButton.styleFrom(
-                                    padding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 14),
+                                    backgroundColor: AppColors.primary,
+                                    foregroundColor: Colors.white,  // ← text color
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
                                   child: const Text('Register'),
@@ -229,8 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                         TextButton(
                           onPressed: () =>
                               Navigator.pushNamed(context, '/login'),
-                          child: const Text(
-                              'Already have an account? Log in'),
+                          child: const Text('Already have an account? Log in'),
                         ),
                       ],
                     ),
