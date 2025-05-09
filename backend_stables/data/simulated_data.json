@@ -3,8 +3,8 @@
         "lot_id": "Lot_A",
         "zone_type": "zone_1",
         "total_spots": 492,
-        "available_spots": 32,
-        "updated_at": "2025-05-08 16:28:49.765459+00:00",
+        "available_spots": 224,
+        "updated_at": "2025-05-09 14:10:56.192853+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_A_Spot_1",
@@ -20,7 +20,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_4",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_5",
@@ -56,11 +56,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_13",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_14",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_15",
@@ -80,7 +80,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_19",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_20",
@@ -100,7 +100,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_24",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_25",
@@ -120,7 +120,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_29",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_30",
@@ -128,7 +128,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_31",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_32",
@@ -152,7 +152,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_37",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_38",
@@ -176,7 +176,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_43",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_44",
@@ -188,15 +188,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_46",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_47",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_48",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_49",
@@ -212,11 +212,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_52",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_53",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_54",
@@ -236,19 +236,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_58",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_59",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_60",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_61",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_62",
@@ -268,11 +268,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_66",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_67",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_68",
@@ -284,7 +284,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_70",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_71",
@@ -296,7 +296,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_73",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_74",
@@ -304,15 +304,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_75",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_76",
                 "status": "available"
             },
             {
-                "spot_id": "Lot_A_Spot_77",
+                "spot_id": "Lot_A_Spot_76",
                 "status": "occupied"
+            },
+            {
+                "spot_id": "Lot_A_Spot_77",
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_78",
@@ -324,15 +324,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_80",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_81",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_82",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_83",
@@ -340,11 +340,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_84",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_85",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_86",
@@ -352,11 +352,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_87",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_88",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_89",
@@ -364,7 +364,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_90",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_91",
@@ -376,11 +376,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_93",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_94",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_95",
@@ -388,7 +388,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_96",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_97",
@@ -404,11 +404,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_100",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_101",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_102",
@@ -416,7 +416,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_103",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_104",
@@ -424,7 +424,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_105",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_106",
@@ -432,11 +432,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_107",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_108",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_109",
@@ -444,7 +444,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_110",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_111",
@@ -456,11 +456,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_113",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_114",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_115",
@@ -480,7 +480,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_119",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_120",
@@ -488,7 +488,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_121",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_122",
@@ -500,7 +500,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_124",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_125",
@@ -508,11 +508,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_126",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_127",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_128",
@@ -520,19 +520,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_129",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_130",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_131",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_132",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_133",
@@ -540,7 +540,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_134",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_135",
@@ -552,11 +552,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_137",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_138",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_139",
@@ -568,7 +568,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_141",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_142",
@@ -584,19 +584,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_145",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_146",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_147",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_148",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_149",
@@ -604,11 +604,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_150",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_151",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_152",
@@ -616,15 +616,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_153",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_154",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_155",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_156",
@@ -648,7 +648,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_161",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_162",
@@ -660,7 +660,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_164",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_165",
@@ -676,7 +676,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_168",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_169",
@@ -684,7 +684,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_170",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_171",
@@ -692,7 +692,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_172",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_173",
@@ -704,15 +704,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_175",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_176",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_177",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_178",
@@ -724,7 +724,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_180",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_181",
@@ -744,7 +744,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_185",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_186",
@@ -752,15 +752,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_187",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_188",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_189",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_190",
@@ -788,11 +788,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_196",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_197",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_198",
@@ -808,11 +808,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_201",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_202",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_203",
@@ -828,11 +828,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_206",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_207",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_208",
@@ -844,7 +844,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_210",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_211",
@@ -852,7 +852,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_212",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_213",
@@ -860,15 +860,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_214",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_215",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_216",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_217",
@@ -884,11 +884,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_220",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_221",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_222",
@@ -896,7 +896,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_223",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_224",
@@ -920,7 +920,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_229",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_230",
@@ -932,7 +932,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_232",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_233",
@@ -940,7 +940,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_234",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_235",
@@ -948,15 +948,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_236",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_237",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_238",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_239",
@@ -964,11 +964,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_240",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_241",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_242",
@@ -976,7 +976,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_243",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_244",
@@ -984,7 +984,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_245",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_246",
@@ -992,19 +992,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_247",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_248",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_249",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_250",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_251",
@@ -1032,15 +1032,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_257",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_258",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_259",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_260",
@@ -1048,11 +1048,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_261",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_262",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_263",
@@ -1064,7 +1064,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_265",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_266",
@@ -1076,7 +1076,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_268",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_269",
@@ -1104,11 +1104,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_275",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_276",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_277",
@@ -1116,7 +1116,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_278",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_279",
@@ -1132,11 +1132,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_282",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_283",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_284",
@@ -1148,15 +1148,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_286",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_287",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_288",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_289",
@@ -1164,7 +1164,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_290",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_291",
@@ -1180,7 +1180,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_294",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_295",
@@ -1200,11 +1200,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_299",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_300",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_301",
@@ -1232,15 +1232,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_307",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_308",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_309",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_310",
@@ -1256,7 +1256,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_313",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_314",
@@ -1276,31 +1276,31 @@
             },
             {
                 "spot_id": "Lot_A_Spot_318",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_319",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_320",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_321",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_322",
                 "status": "available"
             },
             {
-                "spot_id": "Lot_A_Spot_323",
+                "spot_id": "Lot_A_Spot_319",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_320",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_321",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_322",
                 "status": "occupied"
             },
             {
+                "spot_id": "Lot_A_Spot_323",
+                "status": "available"
+            },
+            {
                 "spot_id": "Lot_A_Spot_324",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_325",
@@ -1312,11 +1312,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_327",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_328",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_329",
@@ -1336,11 +1336,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_333",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_334",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_335",
@@ -1360,15 +1360,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_339",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_340",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_341",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_342",
@@ -1388,7 +1388,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_346",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_347",
@@ -1396,7 +1396,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_348",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_349",
@@ -1404,19 +1404,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_350",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_351",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_352",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_353",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_354",
@@ -1424,19 +1424,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_355",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_356",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_357",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_358",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_359",
@@ -1452,15 +1452,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_362",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_363",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_364",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_365",
@@ -1472,11 +1472,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_367",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_368",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_369",
@@ -1488,19 +1488,19 @@
             },
             {
                 "spot_id": "Lot_A_Spot_371",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_372",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_373",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_374",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_375",
@@ -1516,7 +1516,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_378",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_379",
@@ -1528,7 +1528,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_381",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_382",
@@ -1540,7 +1540,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_384",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_385",
@@ -1552,7 +1552,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_387",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_388",
@@ -1564,7 +1564,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_390",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_391",
@@ -1572,35 +1572,35 @@
             },
             {
                 "spot_id": "Lot_A_Spot_392",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_393",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_394",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_395",
                 "status": "available"
             },
             {
-                "spot_id": "Lot_A_Spot_396",
+                "spot_id": "Lot_A_Spot_393",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_394",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_395",
                 "status": "occupied"
+            },
+            {
+                "spot_id": "Lot_A_Spot_396",
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_397",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_398",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_399",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_400",
@@ -1624,11 +1624,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_405",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_406",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_407",
@@ -1636,7 +1636,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_408",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_409",
@@ -1644,7 +1644,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_410",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_411",
@@ -1656,7 +1656,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_413",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_414",
@@ -1668,23 +1668,23 @@
             },
             {
                 "spot_id": "Lot_A_Spot_416",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_417",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_418",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_419",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_420",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_421",
@@ -1696,7 +1696,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_423",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_424",
@@ -1704,7 +1704,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_425",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_426",
@@ -1712,11 +1712,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_427",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_428",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_429",
@@ -1732,15 +1732,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_432",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_433",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_434",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_435",
@@ -1748,7 +1748,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_436",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_437",
@@ -1772,7 +1772,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_442",
-                "status": "available"
+                "status": "occupied"
             },
             {
                 "spot_id": "Lot_A_Spot_443",
@@ -1796,7 +1796,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_448",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_449",
@@ -1804,7 +1804,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_450",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_451",
@@ -1816,7 +1816,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_453",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_454",
@@ -1836,7 +1836,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_458",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_459",
@@ -1844,7 +1844,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_460",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_461",
@@ -1852,23 +1852,23 @@
             },
             {
                 "spot_id": "Lot_A_Spot_462",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_463",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_464",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_A_Spot_465",
                 "status": "available"
             },
             {
-                "spot_id": "Lot_A_Spot_466",
+                "spot_id": "Lot_A_Spot_463",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_464",
+                "status": "available"
+            },
+            {
+                "spot_id": "Lot_A_Spot_465",
                 "status": "occupied"
+            },
+            {
+                "spot_id": "Lot_A_Spot_466",
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_467",
@@ -1884,11 +1884,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_470",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_471",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_472",
@@ -1896,11 +1896,11 @@
             },
             {
                 "spot_id": "Lot_A_Spot_473",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_474",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_475",
@@ -1908,15 +1908,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_476",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_477",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_478",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_479",
@@ -1924,7 +1924,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_480",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_481",
@@ -1956,15 +1956,15 @@
             },
             {
                 "spot_id": "Lot_A_Spot_488",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_489",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_490",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_A_Spot_491",
@@ -1972,7 +1972,7 @@
             },
             {
                 "spot_id": "Lot_A_Spot_492",
-                "status": "occupied"
+                "status": "available"
             }
         ]
     },
@@ -1980,8 +1980,8 @@
         "lot_id": "Lot_B",
         "zone_type": "zone_2",
         "total_spots": 30,
-        "available_spots": 3,
-        "updated_at": "2025-05-08 16:28:49.765459+00:00",
+        "available_spots": 17,
+        "updated_at": "2025-05-09 14:10:56.192853+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_B_Spot_1",
@@ -2029,19 +2029,19 @@
             },
             {
                 "spot_id": "Lot_B_Spot_12",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_13",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_14",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_15",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_16",
@@ -2049,15 +2049,15 @@
             },
             {
                 "spot_id": "Lot_B_Spot_17",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_18",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_19",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_20",
@@ -2065,7 +2065,7 @@
             },
             {
                 "spot_id": "Lot_B_Spot_21",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_22",
@@ -2073,11 +2073,11 @@
             },
             {
                 "spot_id": "Lot_B_Spot_23",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_24",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_25",
@@ -2085,7 +2085,7 @@
             },
             {
                 "spot_id": "Lot_B_Spot_26",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_27",
@@ -2093,15 +2093,15 @@
             },
             {
                 "spot_id": "Lot_B_Spot_28",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_29",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_B_Spot_30",
-                "status": "occupied"
+                "status": "available"
             }
         ]
     },
@@ -2109,8 +2109,8 @@
         "lot_id": "Lot_C",
         "zone_type": "zone_3",
         "total_spots": 40,
-        "available_spots": 4,
-        "updated_at": "2025-05-08 16:28:49.765459+00:00",
+        "available_spots": 19,
+        "updated_at": "2025-05-09 14:10:56.192853+00:00",
         "parking_status": [
             {
                 "spot_id": "Lot_C_Spot_1",
@@ -2166,7 +2166,7 @@
             },
             {
                 "spot_id": "Lot_C_Spot_14",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_15",
@@ -2178,23 +2178,23 @@
             },
             {
                 "spot_id": "Lot_C_Spot_17",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_18",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_19",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_20",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_21",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_22",
@@ -2202,7 +2202,7 @@
             },
             {
                 "spot_id": "Lot_C_Spot_23",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_24",
@@ -2210,19 +2210,19 @@
             },
             {
                 "spot_id": "Lot_C_Spot_25",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_26",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_27",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_28",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_29",
@@ -2230,11 +2230,11 @@
             },
             {
                 "spot_id": "Lot_C_Spot_30",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_31",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_32",
@@ -2242,7 +2242,7 @@
             },
             {
                 "spot_id": "Lot_C_Spot_33",
-                "status": "occupied"
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_34",
@@ -2258,15 +2258,15 @@
             },
             {
                 "spot_id": "Lot_C_Spot_37",
-                "status": "occupied"
-            },
-            {
-                "spot_id": "Lot_C_Spot_38",
                 "status": "available"
             },
             {
-                "spot_id": "Lot_C_Spot_39",
+                "spot_id": "Lot_C_Spot_38",
                 "status": "occupied"
+            },
+            {
+                "spot_id": "Lot_C_Spot_39",
+                "status": "available"
             },
             {
                 "spot_id": "Lot_C_Spot_40",

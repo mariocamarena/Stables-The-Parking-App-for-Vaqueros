@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'home_screen.dart';
 import 'rewards_screen.dart';
 import 'map_screen.dart';
-// import 'settings_screen.dart';
 import 'account_screen.dart';
 import '../utils/constants.dart';
-
-
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key, required this.title, this.userData});
@@ -19,45 +17,62 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  LatLng? _mapTarget; 
 
   @override
   Widget build(BuildContext context) {
+    
+    final String userId    = widget.userData?['userId']   as String? ?? '';
+    final String userName  = widget.userData?['userName'] as String? ?? 'Student Name';
+    final String userEmail = widget.userData?['userEmail'] as String? ?? 'student@utrgv.edu';
+
     final List<Widget> _screens = [
-      const SensorInfoScreen(),
+      SensorInfoScreen(
+        
+        onLotTap: (String lotId, LatLng center) {
+          setState(() {
+            _mapTarget    = center;
+            _selectedIndex = 2; 
+          });
+        },
+      ),
       const RewardsScreen(),
       MapScreen(
-      userId:   widget.userData?['userId']   as String, 
-      userName: widget.userData?['userName'] as String,
+        target:   _mapTarget,
+        userId:   userId,
+        userName: userName,
       ),
       AccountScreen(
-        userName: widget.userData?['userName'] ?? 'Student Name',
-        userEmail: widget.userData?['userEmail'] ?? 'student@utrgv.edu',
+        userName: userName,
+        userEmail: userEmail,
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: AppColors.utgrvOrange, // UTRGV Orange
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                AppColors.utgrvOrange, 
-                Color(0xFFFFA040), 
+                AppColors.utgrvOrange,
+                Color(0xFFFFA040),
               ],
             ),
           ),
         ),
-        title: const Text('Stables - UTRGV Parking App', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Stables - UTRGV Parking App',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
             onPressed: () {
               setState(() {
-                _selectedIndex = 3; 
+                _selectedIndex = 3; // Account tab
               });
             },
           ),
@@ -72,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color.fromARGB(255, 241, 200, 157), // UTRGV Orange
+        selectedItemColor: const Color.fromARGB(255, 241, 200, 157),
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.white,
         items: const [

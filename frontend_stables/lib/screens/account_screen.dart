@@ -36,7 +36,7 @@ class AccountScreen extends StatelessWidget {
         ),
         SizedBox(height: 8),
         Text(
-          'Team Members:\n- Mario Camarena\n- Oziel Sauceda\n- Dorcas\n- Victor Silvia\n\nAdvisor:\n- Dr. Andres Figueroa',
+          'Team Members:\n- Mario Camarena\n- Oziel Sauceda\n- Dorcas Sackey-Walker\n- Victor Silva\n\nAdvisor:\n- Dr. Andres Figueroa',
         ),
       ],
     );
