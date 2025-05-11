@@ -204,7 +204,7 @@ setInterval(updateSimulatedData, 1000);
 // });
 
 app.get('/parking', (req, res) => {
-  const userId = req.query.user_id;    // <— if you don't pass this, it's undefined
+  const userId = req.query.user_id;    
 
   // load the raw simulated data (status = "available" or "occupied")
   const raw     = fs.readFileSync(dataPath, 'utf8');
