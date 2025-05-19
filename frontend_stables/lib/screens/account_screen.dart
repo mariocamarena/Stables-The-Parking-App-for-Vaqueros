@@ -1,17 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../utils/prefs.dart';
+import '../services/location_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../config/secret.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   final String userName;
   final String userEmail;
-  
+
   const AccountScreen({
-    super.key,
+    Key? key,
     required this.userName,
     required this.userEmail,
-  });
+  }) : super(key: key);
+
+  @override
+  _AccountScreenState createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  bool _gpsEnabled = false;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load saved GPS preference
+    Prefs.getGpsEnabled().then((value) {
+      setState(() {
+        _gpsEnabled = value;
+        _loading = false;
+      });
+    });
+  }
+
+  Future<void> _onGpsToggle(bool value) async {
+    setState(() => _gpsEnabled = value);
+    await Prefs.setGpsEnabled(value);
+
+    if (value) {
+      try {
+        final pos = await determineLatLng();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(
+            'Location: ${pos.latitude.toStringAsFixed(5)}, ${pos.longitude.toStringAsFixed(5)}'
+          )),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('GPS error: $e')),
+        );
+      }
+    }
+  }
 
   void _showAboutDialog(BuildContext context) {
     showAboutDialog(
@@ -49,10 +92,6 @@ class AccountScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
     bool isLoading = false;
     String? errorMessage;
-    // TODO: add eye inco to reveal password
-    // bool obscureOld = true;
-    // bool obscureNew = true;
-    // bool obscureConfirm = true;
 
     await showDialog(
       context: context,
@@ -115,9 +154,7 @@ class AccountScreen extends StatelessWidget {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                   child: const Text('Cancel'),
                 ),
                 isLoading
@@ -135,29 +172,26 @@ class AccountScreen extends StatelessWidget {
                                 Uri.parse('$apiUrl/change-password'),
                                 headers: {'Content-Type': 'application/json'},
                                 body: jsonEncode({
-                                  'email': userEmail,
+                                  'email': widget.userEmail,
                                   'oldPassword': oldPasswordController.text,
                                   'newPassword': newPasswordController.text,
                                 }),
                               );
                               if (response.statusCode == 200) {
-                                Navigator.pop(context); 
+                                Navigator.pop(context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Password changed successfully')),
                                 );
                               } else {
                                 setState(() {
-                                  errorMessage = jsonDecode(response.body)['error'] ?? 'Change password failed';
+                                  errorMessage =
+                                      jsonDecode(response.body)['error'] ?? 'Change password failed';
                                 });
                               }
                             } catch (e) {
-                              setState(() {
-                                errorMessage = 'Error connecting to server';
-                              });
+                              setState(() => errorMessage = 'Error connecting to server');
                             } finally {
-                              setState(() {
-                                isLoading = false;
-                              });
+                              setState(() => isLoading = false);
                             }
                           }
                         },
@@ -196,11 +230,11 @@ class AccountScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userName,
+                      widget.userName,
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      userEmail,
+                      widget.userEmail,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.grey),
                     ),
                   ],
@@ -223,30 +257,22 @@ class AccountScreen extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () {
-              // Only returns to login page, need to delete tokens ??
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),
           const Divider(),
-          // Notification Settings Section
+          // Preference Settings Section
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Text('Preference Settings', style: Theme.of(context).textTheme.headlineSmall),
           ),
-          SwitchListTile(
-            title: const Text('Enable Notifications'),
-            value: true, // Replace with dynamic state later
-            onChanged: (bool value) {
-              // TODO: Save notification preferences
-            },
-          ),
-          SwitchListTile(
-            title: const Text('Enable GPS'),
-            value: true, // Replace with dynamic state later
-            onChanged: (bool value) {
-              // TODO: Save GPS preferences
-            },
-          ),
+          _loading
+              ? const Center(child: CircularProgressIndicator())
+              : SwitchListTile(
+                  title: const Text('Enable GPS'),
+                  value: _gpsEnabled,
+                  onChanged: _onGpsToggle,
+                ),
           const Divider(),
           // About / App Info Section
           ListTile(

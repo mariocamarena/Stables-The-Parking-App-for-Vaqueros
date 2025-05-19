@@ -6,7 +6,11 @@
   "scripts": {
     "backend": "node server.js",
     "frontend": "cd ../frontend_stables && flutter run -d chrome --web-port=5500",
-    "start": "concurrently \"npm run backend\" \"npm run frontend\""
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "test": "jest --runInBand --forceExit"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +25,8 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
   }
 }

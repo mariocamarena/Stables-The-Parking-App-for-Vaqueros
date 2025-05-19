@@ -70,25 +70,26 @@ app.post('/login', async (req, res) => {
 
 
 app.post('/register', async (req, res) => {
-  const { email, password } = req.body;
-  console.log("IN /register", req.body);
+  const { email, password, parking_zone } = req.body;
 
+  if (![1, 2, 3].includes(parking_zone)) {
+    return res.status(400).json({ error: 'Invalid parking zone' });
+  }
 
   try {
-    // Check if email already exists
     const existing = await db.query(
-      'SELECT * FROM users WHERE email = $1',
+      'SELECT 1 FROM users WHERE email = $1',
       [email]
     );
-
-    if (existing.rows.length > 0) {
+    if (existing.rows.length) {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10);
     await db.query(
-      'INSERT INTO users (email, password) VALUES ($1, $2)',
-      [email, hashedPassword]
+      `INSERT INTO users (email, password, parking_zone)
+       VALUES ($1, $2, $3)`,
+      [email, hash, parking_zone]
     );
 
     res.status(201).json({ message: 'User registered successfully' });
@@ -98,26 +99,45 @@ app.post('/register', async (req, res) => {
   }
 });
 
+
 app.post('/change-password', async (req, res) => {
   const { email, oldPassword, newPassword } = req.body;
   try {
-    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (!oldPassword) {
+      const hash = await bcrypt.hash(newPassword, 10);
+      await db.query(
+        'UPDATE users SET password = $1 WHERE email = $2',
+        [hash, email]
+      );
+      return res.json({ message: 'Password reset successfully' });
+    }
+
+    // otherwise do the normal change-password flow
+    const result = await db.query(
+      'SELECT password FROM users WHERE email = $1',
+      [email]
+    );
     const user = result.rows[0];
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) {
+    const match = await bcrypt.compare(oldPassword, user.password);
+    if (!match) {
       return res.status(401).json({ error: 'Old password is incorrect' });
     }
     const newHash = await bcrypt.hash(newPassword, 10);
-    await db.query('UPDATE users SET password = $1 WHERE email = $2', [newHash, email]);
-    res.json({ message: 'Password updated successfully' });
+    await db.query(
+      'UPDATE users SET password = $1 WHERE email = $2',
+      [newHash, email]
+    );
+    res.json({ message: 'Password changed successfully' });
+
   } catch (err) {
-    console.error('Change password error:', err.message);
+    console.error('Change password error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 app.post('/parking/claim', (req, res) => {
   const { spot_id, user_id } = req.body;
@@ -184,26 +204,31 @@ setInterval(updateSimulatedData, 1000);
 // });
 
 app.get('/parking', (req, res) => {
-  const userId = req.query.user_id;
+  const userId = req.query.user_id;    
 
-  const raw = fs.readFileSync(dataPath, 'utf8');
+  // load the raw simulated data (status = "available" or "occupied")
+  const raw     = fs.readFileSync(dataPath, 'utf8');
   const payload = JSON.parse(raw);
 
-  payload.forEach(lot => {
-    lot.parking_status = lot.parking_status.map(spot => {
-      const claimer = claimedSpots.get(spot.spot_id);
-      if (claimer === userId) {
-        return { ...spot, status: 'claimed' }; 
-      } else if (claimer) {
-        return { ...spot, status: 'taken' };   
-      }
-      return spot;                             
+  // only *if* a valid user_id is provided do we map any spot->claimed/taken
+  if (userId) {
+    payload.forEach(lot => {
+      lot.parking_status = lot.parking_status.map(spot => {
+        const claimer = claimedSpots.get(spot.spot_id);
+        if (claimer === userId) {
+          return { ...spot, status: 'claimed' };
+        } else if (claimer) {
+          return { ...spot, status: 'taken' };
+        }
+        return spot;
+      });
     });
-  });
+  }
 
+  // return either the raw available/occupied data (default)
+  // or the augmented claimed/taken data (if you passed ?user_id=...)
   res.json(payload);
 });
-
 
 app.get('/dashboard', (req,res) => {
   res.sendFile(path.join(__dirname, 'scripts', 'dashboard.html'));
@@ -268,7 +293,7 @@ const PORT = process.env.PORT || 3000;
                                  ####                     ##
                                   ####                    ###
                                                           ####
-                                                      	   ##`)
+                                                           ##`)
   } catch (err) {
     console.error('Server startup aborted due to migration failure:', err.message);
     process.exit(1);

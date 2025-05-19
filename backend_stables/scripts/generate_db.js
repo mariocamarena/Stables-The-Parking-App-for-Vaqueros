@@ -25,6 +25,7 @@ async function insertTestUsers() {
   const testUsers = [
     { email: 'student.01@utrgv.edu', password: 'stables123', role: 'user', parking_zone: 1 },
     { email: 'student.02@utrgv.edu', password: 'stables123', role: 'user', parking_zone: 2 },
+    { email: 'student.03@utrgv.edu', password: 'stables123', role: 'user', parking_zone: 3 },
     { email: 'admin@utrgv.edu', password: 'admin123', role: 'admin', parking_zone: 0 },
   ];
 

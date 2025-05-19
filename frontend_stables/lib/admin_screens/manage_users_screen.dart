@@ -85,7 +85,8 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
                       return Card(
                       child: ListTile(
                         title: Text(user['email'] ?? 'No Email'),
-                        subtitle: Text('Role: ${user['role'] ?? 'unknown'}'),
+                        subtitle: Text('Role: ${user['role'] ?? 'unknown'} | Zone: ${user['parking_zone'] ?? 'N/A'}'),
+                        // subtitle: Text('Role: ${user['role'] ?? 'unknown'}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _deleteUser(user['id']),

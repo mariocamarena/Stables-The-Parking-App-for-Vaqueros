@@ -11,7 +11,7 @@ import 'screens/register_screen.dart';
 import 'admin_screens/admin_screen.dart'; 
 import 'admin_screens/admin_parking_overview.dart';
 import 'admin_screens/manage_users_screen.dart';
-
+import 'admin_screens/admin_dashboard_screen.dart';
 
 Future<void> main() async {
   //await dotenv.load(fileName: ".env");
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/admin': (context) => const AdminScreen(),
         '/admin-parking-overview': (context) => const AdminParkingOverview(),
         '/manage_users': (context) => const ManageUsersScreen(),
+        '/admin-dashboard': (context) => const AdminDashboardFlutter(),
 
         '/main': (context) {
           final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; 
