@@ -22,100 +22,274 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   LatLng? _mapTarget;
 
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
+
+  // Navbar animation controller
+  late AnimationController _navController;
+  late Animation<double> _navAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeOut),
+    );
+    _fadeController.forward();
+
+    // Navbar indicator animation
+    _navController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navAnimation = Tween<double>(begin: 0.0, end: 0.0).animate(
+      CurvedAnimation(parent: _navController, curve: Curves.easeOutBack),
+    );
+  }
+
+  @override
+  void dispose() {
+    _fadeController.dispose();
+    _navController.dispose();
+    super.dispose();
+  }
+
+  void _onTabChanged(int idx) {
+    if (idx == _selectedIndex) return;
+
+    // Animate navbar indicator
+    _navAnimation = Tween<double>(
+      begin: _selectedIndex.toDouble(),
+      end: idx.toDouble(),
+    ).animate(
+      CurvedAnimation(parent: _navController, curve: Curves.easeOutBack),
+    );
+    _navController.forward(from: 0.0);
+
+    // Fade transition for content
+    _fadeController.reverse().then((_) {
+      setState(() => _selectedIndex = idx);
+      _fadeController.forward();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userId    = widget.userData?['userId']   as String? ?? '';
-    final userName  = widget.userData?['userName'] as String? ?? 'Student Name';
-    final userEmail = widget.userData?['userEmail']as String? ?? 'student@utrgv.edu';
+    final userId = widget.userData?['userId'] as String? ?? '';
+    final userName = widget.userData?['userName'] as String? ?? 'Student Name';
+    final userEmail = widget.userData?['userEmail'] as String? ?? 'student@utrgv.edu';
 
     final screens = <Widget>[
       SensorInfoScreen(onLotTap: (lotId, center) {
         setState(() {
-          _mapTarget      = center;
-          _selectedIndex = 1;
+          _mapTarget = center;
         });
+        _onTabChanged(1);
       }),
       MapScreen(target: _mapTarget, userId: userId, userName: userName),
       AccountScreen(userName: userName, userEmail: userEmail),
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        // Height accommodates two‑line title
-        toolbarHeight: 72,
-        elevation: 2,
-        backgroundColor: AppColors.utgrvOrange,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-        ),
-        title: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'STABLES',
-              style: GoogleFonts.lato(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-                letterSpacing: 2.0,
-                shadows: [
-                  Shadow(offset: Offset(0, 1), blurRadius: 2, color: Colors.black26),
+      backgroundColor: const Color(0xFFFAFAFA),
+      extendBody: true,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [AppColors.utgrvOrange, Color(0xFFE67300)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.utgrvOrange.withOpacity(0.3),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 40), // Balance for settings icon
+                  Text(
+                    'STABLES',
+                    style: GoogleFonts.fredoka(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 40,
+                    child: IconButton(
+                      icon: const Icon(Icons.settings_outlined, size: 22, color: Colors.white),
+                      onPressed: () => _onTabChanged(2),
+                      splashRadius: 22,
+                      tooltip: 'Settings',
+                    ),
+                  ),
                 ],
               ),
             ),
-            Text(
-              'UTRGV Parking App',
-              style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white70,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => setState(() => _selectedIndex = 2),
-            splashRadius: 20,
           ),
-          const SizedBox(width: 8),
+        ),
+      ),
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: screens[_selectedIndex],
+      ),
+      bottomNavigationBar: _buildCustomNavBar(),
+    );
+  }
+
+  Widget _buildCustomNavBar() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      height: 70,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
         ],
       ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final navWidth = constraints.maxWidth;
+          final itemWidth = navWidth / 3;
+          final indicatorWidth = itemWidth - 16;
+          final padding = 8.0;
 
-      body: screens[_selectedIndex],
+          return AnimatedBuilder(
+            animation: _navAnimation,
+            builder: (context, child) {
+              // Use animation value for smooth interpolation
+              final animatedPosition = padding + (_navAnimation.value * itemWidth);
 
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (idx) => setState(() => _selectedIndex = idx),
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: AppColors.utgrvOrange.withOpacity(0.2),
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        animationDuration: const Duration(milliseconds: 300),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            selectedIcon: Icon(Icons.map),
-            label: 'Map',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.account_circle_outlined),
-            selectedIcon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
+              return Stack(
+                children: [
+                  // Sliding indicator pill - uses Transform for smooth animation
+                  Positioned(
+                    left: animatedPosition,
+                    top: 8,
+                    child: Container(
+                      width: indicatorWidth,
+                      height: 54,
+                      decoration: BoxDecoration(
+                        color: AppColors.utgrvOrange.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                  // Nav items row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildNavItem(
+                        index: 0,
+                        icon: Icons.home_outlined,
+                        selectedIcon: Icons.home_rounded,
+                        label: 'Home',
+                      ),
+                      _buildNavItem(
+                        index: 1,
+                        icon: Icons.map_outlined,
+                        selectedIcon: Icons.map_rounded,
+                        label: 'Map',
+                      ),
+                      _buildNavItem(
+                        index: 2,
+                        icon: Icons.person_outline_rounded,
+                        selectedIcon: Icons.person_rounded,
+                        label: 'Account',
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required int index,
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+  }) {
+    final isSelected = _selectedIndex == index;
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _onTabChanged(index),
+        behavior: HitTestBehavior.opaque,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0.0, end: isSelected ? 1.0 : 0.0),
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutBack,
+          builder: (context, value, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Transform.scale(
+                  scale: 1.0 + (value * 0.15),
+                  child: Icon(
+                    isSelected ? selectedIcon : icon,
+                    color: Color.lerp(
+                      Colors.grey[500],
+                      AppColors.utgrvOrange,
+                      value,
+                    ),
+                    size: 26,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  label,
+                  style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: Color.lerp(
+                      Colors.grey[500],
+                      AppColors.utgrvOrange,
+                      value,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

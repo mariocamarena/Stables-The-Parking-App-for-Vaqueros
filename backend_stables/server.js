@@ -56,9 +56,21 @@ app.post('/login', async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (passwordMatch) {
-      res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone, role: user.role }); //
+    // =============================================================================
+    // ORIGINAL BCRYPT CODE (commented out)
+    // Reason: PostgreSQL database is no longer active. Using in-memory store with
+    // plain text passwords for demo simplicity - no external database required.
+    // =============================================================================
+    // const passwordMatch = await bcrypt.compare(password, user.password);
+    // if (passwordMatch) {
+    //   res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone, role: user.role });
+    // } else {
+    //   res.status(401).json({ error: 'Invalid email or password' });
+    // }
+
+    // NEW: Simple plain text password comparison for demo
+    if (password === user.password) {
+      res.json({ id: user.id, email: user.email, parking_zone: user.parking_zone, role: user.role });
     } else {
       res.status(401).json({ error: 'Invalid email or password' });
     }
@@ -85,11 +97,23 @@ app.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const hash = await bcrypt.hash(password, 10);
+    // =============================================================================
+    // ORIGINAL BCRYPT CODE (commented out)
+    // Reason: PostgreSQL database is no longer active. Using in-memory store with
+    // plain text passwords for demo simplicity - no external database required.
+    // =============================================================================
+    // const hash = await bcrypt.hash(password, 10);
+    // await db.query(
+    //   `INSERT INTO users (email, password, parking_zone)
+    //    VALUES ($1, $2, $3)`,
+    //   [email, hash, parking_zone]
+    // );
+
+    // NEW: Store plain text password for demo
     await db.query(
       `INSERT INTO users (email, password, parking_zone)
        VALUES ($1, $2, $3)`,
-      [email, hash, parking_zone]
+      [email, password, parking_zone]
     );
 
     res.status(201).json({ message: 'User registered successfully' });
@@ -104,10 +128,21 @@ app.post('/change-password', async (req, res) => {
   const { email, oldPassword, newPassword } = req.body;
   try {
     if (!oldPassword) {
-      const hash = await bcrypt.hash(newPassword, 10);
+      // =============================================================================
+      // ORIGINAL BCRYPT CODE (commented out)
+      // Reason: PostgreSQL database is no longer active. Using in-memory store with
+      // plain text passwords for demo simplicity - no external database required.
+      // =============================================================================
+      // const hash = await bcrypt.hash(newPassword, 10);
+      // await db.query(
+      //   'UPDATE users SET password = $1 WHERE email = $2',
+      //   [hash, email]
+      // );
+
+      // NEW: Password reset - store plain text for demo
       await db.query(
         'UPDATE users SET password = $1 WHERE email = $2',
-        [hash, email]
+        [newPassword, email]
       );
       return res.json({ message: 'Password reset successfully' });
     }
@@ -121,14 +156,29 @@ app.post('/change-password', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    const match = await bcrypt.compare(oldPassword, user.password);
-    if (!match) {
+
+    // =============================================================================
+    // ORIGINAL BCRYPT CODE (commented out)
+    // Reason: PostgreSQL database is no longer active. Using in-memory store with
+    // plain text passwords for demo simplicity - no external database required.
+    // =============================================================================
+    // const match = await bcrypt.compare(oldPassword, user.password);
+    // if (!match) {
+    //   return res.status(401).json({ error: 'Old password is incorrect' });
+    // }
+    // const newHash = await bcrypt.hash(newPassword, 10);
+    // await db.query(
+    //   'UPDATE users SET password = $1 WHERE email = $2',
+    //   [newHash, email]
+    // );
+
+    // NEW: Plain text comparison for demo
+    if (oldPassword !== user.password) {
       return res.status(401).json({ error: 'Old password is incorrect' });
     }
-    const newHash = await bcrypt.hash(newPassword, 10);
     await db.query(
       'UPDATE users SET password = $1 WHERE email = $2',
-      [newHash, email]
+      [newPassword, email]
     );
     res.json({ message: 'Password changed successfully' });
 
@@ -186,7 +236,7 @@ function updateSimulatedData(){
 }
 
 updateSimulatedData();
-setInterval(updateSimulatedData, 1000);
+setInterval(updateSimulatedData, 3000);
 
 
 // app.get('/parking',(req,res) => {

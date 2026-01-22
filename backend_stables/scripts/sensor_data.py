@@ -7,7 +7,7 @@ import os
 def determine_occupancy(total_spots, current_minutes): 
     # Define time slots in minutes since midnight:
     # Slot 1: 7:00 (420) to 9:30 (570)       -> Lower traffic
-    # Slot 2: 9:30 (570) to 12:00 (720)       -> Highest traffic
+    # Slot 2:         -> Highest traffic
     # Slot 3: 12:00 (720) to 15:30 (930)       -> Second highest traffic
     # Slot 4: 15:30 (930) to 17:00 (1020)      -> Medium traffic
     # Slot 5: 17:00 (1020) to 7:00 (420 next day) -> Lowest traffic
