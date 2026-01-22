@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import '../config/secret.dart';
 import '../utils/constants.dart';
@@ -21,6 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen>
   int? _selectedZone;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _obscurePassword = true;
+  bool _obscureConfirm = true;
 
   late AnimationController _fadeController;
   late Animation<double>  _fadeAnimation;
@@ -80,117 +83,188 @@ class _RegisterScreenState extends State<RegisterScreen>
     }
   }
 
+  InputDecoration _buildInputDecoration({
+    required String label,
+    required IconData prefixIcon,
+    Widget? suffixIcon,
+  }) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: GoogleFonts.poppins(),
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.grey[200]!),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.grey[200]!),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColors.utgrvOrange, width: 1.5),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.red, width: 1.5),
+      ),
+      prefixIcon: Icon(prefixIcon, color: Colors.grey[500]),
+      suffixIcon: suffixIcon,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Center(
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Card(
-                margin: const EdgeInsets.all(24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
+      body: Stack(
+        children: [
+          // Gradient background matching login
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.white, Color(0xFFFAF6F3)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+
+          // Main content
+          FadeTransition(
+            opacity: _fadeAnimation,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 32),
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Heading
+                        // Title
                         Text(
-                          'Create Your Account',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          'Create Account',
+                          style: GoogleFonts.fredoka(
+                            color: AppColors.utgrvOrange,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 28,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Select your parking zone and sign up',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey[500],
+                            fontSize: 13,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),
 
-                        // Any error
+                        // Error message
                         if (_errorMessage != null)
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.only(bottom: 14),
                             child: Text(
                               _errorMessage!,
-                              style: const TextStyle(color: Colors.red),
+                              style: GoogleFonts.poppins(
+                                color: Colors.red,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
 
-                        // Email
+                        // Email field
                         TextFormField(
                           controller: _emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.email),
-                            border: OutlineInputBorder(),
-                          ),
                           keyboardType: TextInputType.emailAddress,
+                          decoration: _buildInputDecoration(
+                            label: 'Email',
+                            prefixIcon: Icons.email_outlined,
+                          ),
                           validator: (v) =>
                               (v == null || !v.contains('@'))
                                   ? 'Enter a valid email'
                                   : null,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 14),
 
-                        // Password
+                        // Password field
                         TextFormField(
                           controller: _passwordController,
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock),
-                            border: OutlineInputBorder(),
+                          obscureText: _obscurePassword,
+                          decoration: _buildInputDecoration(
+                            label: 'Password',
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                            ),
                           ),
-                          obscureText: true,
                           validator: (v) =>
                               (v == null || v.length < 6)
                                   ? 'Minimum 6 characters'
                                   : null,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 14),
 
-                        // Confirm Password
+                        // Confirm Password field
                         TextFormField(
                           controller: _confirmController,
-                          decoration: const InputDecoration(
-                            labelText: 'Confirm Password',
-                            prefixIcon: Icon(Icons.lock_outline),
-                            border: OutlineInputBorder(),
+                          obscureText: _obscureConfirm,
+                          decoration: _buildInputDecoration(
+                            label: 'Confirm Password',
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureConfirm ? Icons.visibility_off : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                            ),
                           ),
-                          obscureText: true,
                           validator: (v) =>
                               (v != _passwordController.text)
                                   ? 'Passwords do not match'
                                   : null,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 14),
 
                         // Zone dropdown
                         DropdownButtonFormField<int>(
                           value: _selectedZone,
-                          decoration: const InputDecoration(
-                            labelText: 'Parking Zone',
-                            prefixIcon: Icon(Icons.map),
-                            border: OutlineInputBorder(),
+                          decoration: _buildInputDecoration(
+                            label: 'Parking Zone',
+                            prefixIcon: Icons.map_outlined,
                           ),
                           dropdownColor: Colors.white,
-                          elevation: 8,
-                          style: const TextStyle(color: Colors.black),
-                          iconEnabledColor: AppColors.primary,
+                          elevation: 4,
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                          iconEnabledColor: AppColors.utgrvOrange,
                           items: [1, 2, 3].map((zone) {
                             return DropdownMenuItem(
                               value: zone,
@@ -205,27 +279,43 @@ class _RegisterScreenState extends State<RegisterScreen>
                         // Register button
                         SizedBox(
                           width: double.infinity,
+                          height: 48,
                           child: _isLoading
-                              ? const Center(child: CircularProgressIndicator())
+                              ? const Center(child: CircularProgressIndicator(
+                                  color: AppColors.utgrvOrange,
+                                ))
                               : ElevatedButton(
                                   onPressed: _register,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,  // ← text color
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    backgroundColor: AppColors.utgrvOrange,
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: const Text('Register'),
+                                  child: Text(
+                                    'Register',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
                         ),
 
                         const SizedBox(height: 16),
+
+                        // Back to login link
                         TextButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/login'),
-                          child: const Text('Already have an account? Log in'),
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Already have an account? Log in',
+                            style: GoogleFonts.poppins(
+                              color: Colors.blue,
+                              fontSize: 13,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -234,7 +324,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

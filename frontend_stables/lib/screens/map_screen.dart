@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 
@@ -88,7 +89,7 @@ class _MapScreenState extends State<MapScreen> {
       onTap: _handleTapOnMap,
     );
     _fetchParkingData();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _fetchParkingData());
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _fetchParkingData());
   }
 
   @override
@@ -150,13 +151,10 @@ class _MapScreenState extends State<MapScreen> {
     if (status == 'available') {
       final confirm = await showDialog<bool>(
         context: context,
-        builder: (_) => AlertDialog(
-          title: Text('Hey ${widget.userName}!'),
-          content: Text('Do you want to claim spot $spotId?'),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('No')),
-            TextButton(onPressed: () => Navigator.pop(context, true),  child: const Text('Yes')),
-          ],
+        builder: (_) => _buildClaimDialog(
+          userName: widget.userName,
+          spotId: spotId,
+          isClaim: true,
         ),
       );
       if (confirm != true) return;
@@ -190,13 +188,10 @@ class _MapScreenState extends State<MapScreen> {
     if (status == 'claimed' && ClaimManager.claimedSpotId == spotId) {
       final confirm = await showDialog<bool>(
         context: context,
-        builder: (_) => AlertDialog(
-          title: Text('Hey ${widget.userName}!'),
-          content: Text('Unclaim spot $spotId?'),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('No')),
-            TextButton(onPressed: () => Navigator.pop(context, true),  child: const Text('Yes')),
-          ],
+        builder: (_) => _buildClaimDialog(
+          userName: widget.userName,
+          spotId: spotId,
+          isClaim: false,
         ),
       );
       if (confirm != true) return;
@@ -397,6 +392,121 @@ class _MapScreenState extends State<MapScreen> {
       if (intersect) inside = !inside;
     }
     return inside;
+  }
+
+  Widget _buildClaimDialog({
+    required String userName,
+    required String spotId,
+    required bool isClaim,
+  }) {
+    final spotName = spotId.replaceAll('_', ' ');
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        constraints: const BoxConstraints(maxWidth: 340),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Icon
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: isClaim
+                    ? const Color(0xFF4CAF50).withOpacity(0.1)
+                    : AppColors.utgrvOrange.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                isClaim ? Icons.add_location_alt_rounded : Icons.location_off_rounded,
+                color: isClaim ? const Color(0xFF4CAF50) : AppColors.utgrvOrange,
+                size: 28,
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Title
+            Text(
+              'Hey $userName!',
+              style: GoogleFonts.fredoka(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[800],
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Message
+            Text(
+              isClaim
+                  ? 'Would you like to claim $spotName?'
+                  : 'Release $spotName?',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            if (isClaim)
+              Text(
+                'This will reserve the spot for you',
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: Colors.grey[400],
+                ),
+              ),
+            const SizedBox(height: 20),
+            // Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 44,
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.grey[700],
+                        side: BorderSide(color: Colors.grey[300]!),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SizedBox(
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isClaim
+                            ? const Color(0xFF4CAF50)
+                            : AppColors.utgrvOrange,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        isClaim ? 'Claim' : 'Release',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
